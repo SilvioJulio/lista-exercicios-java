@@ -1,4 +1,4 @@
-import org.academiadb.questao16.Pessoa;
+import org.academiadb.controleEmprestimo.Pessoa;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,6 @@
-import org.academiadb.questao16.Emprestimo;
-import org.academiadb.questao16.Livro;
-import org.academiadb.questao16.Pessoa;
+import org.academiadb.controleEmprestimo.Emprestimo;
+import org.academiadb.controleEmprestimo.Livro;
+import org.academiadb.controleEmprestimo.Pessoa;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
