@@ -11,7 +11,12 @@ public class Emprestimo  {
     private LocalDate dataDevolucao;
 
 
-    public  Emprestimo( Pessoa pesssoa ,Livro livro, LocalDate dataEmprestimo, LocalDate dataDevolucao ) {
+    public  Emprestimo(
+            Pessoa pesssoa ,
+            Livro livro,
+            LocalDate dataEmprestimo,
+            LocalDate dataDevolucao
+    ) {
         if (dataDevolucao.isBefore(dataEmprestimo)) {
             throw new IllegalArgumentException("Data de devolução não pode ser anterior à data de empréstimo.");
         }

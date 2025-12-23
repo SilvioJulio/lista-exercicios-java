@@ -7,7 +7,11 @@ public class Livro {
     String autor;
     String genero;
 
-    public Livro(String titulo, String autor, String genero) {
+    public Livro(
+            String titulo,
+            String autor,
+            String genero
+    ) {
 
         if (titulo == null || titulo.isBlank()) throw new IllegalArgumentException("O campo titulo, não pode ser vazio");
         if (autor == null || autor.isBlank()) throw new IllegalArgumentException("O campo autor, não pode ser vazio ");
@@ -20,18 +24,9 @@ public class Livro {
     }
 
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
+    public String getTitulo()      {return titulo;}
+    public String getAutor()       {return autor;}
+    public String getGenero()      {return genero;}
     public int getNumeroRegistro() {
         return numeroRegistro;
      }
