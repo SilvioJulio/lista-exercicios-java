@@ -9,12 +9,12 @@ public class Pessoa {
     private final Integer avosPaternosIdade;  // opcional: se quiser validar idade dos avós
     private final String avosMaternosNome;
     private final Integer avosMaternosIdade;  // opcional
-    private final String nomeMae;
-    private final int idadeMae;
-    private final String nomePai;
-    private final int idadePai;
-    private final String nomeFilho;
-    private final int idadeFilho;
+    private final String maeNome;
+    private final int maeIdade;
+    private final String paiNome;
+    private final int paiIdade;
+    private final String filhoNome;
+    private final int filhoIdade;
 
 
     public Pessoa(String avosPaternosNome,
@@ -22,40 +22,40 @@ public class Pessoa {
                   String avosMaternosNome,
                   Integer avosMaternosIdade,
                   String nomeMae,
-                  int idadeMae,
-                  String nomePai,
-                  int idadePai,
-                  String nomeFilho,
-                  int idadeFilho) {
+                  int maeIdade,
+                  String paiNome,
+                  int paiIdade,
+                  String filhoNome,
+                  int filhoIdade) {
 
         // método validarNomes verifica e faz o tratamento de erros dos campos nomes
         this.avosPaternosNome = validarNomes(avosPaternosNome, "avosPaternosNome");
         this.avosPaternosIdade = avosPaternosIdade;
         this.avosMaternosNome = validarNomes(avosMaternosNome, "avosMaternosNome");
         this.avosMaternosIdade = avosMaternosIdade;
-        this.nomeMae          = validarNomes(nomeMae,          "nomeMae");
-        this.nomePai          = validarNomes(nomePai,          "nomePai");
-        this.nomeFilho        = validarNomes(nomeFilho,        "nomeFilho");
+        this.maeNome = validarNomes(nomeMae,          "maeNome:");
+        this.paiNome = validarNomes(paiNome,          "paiNome:");
+        this.filhoNome = validarNomes(filhoNome,        "filhoNome");
 
         // método validarIdade verifica e faz o tratamento de erros dos campos idade
-        this.idadeMae   = validarIdade(idadeMae,   "idadeMae");
-        this.idadePai   = validarIdade(idadePai,   "idadePai");
-        this.idadeFilho = validarIdade(idadeFilho, "idadeFilho");
+        this.maeIdade = validarIdade(maeIdade,   "maeIdad");
+        this.paiIdade = validarIdade(paiIdade,   "paiIdade");
+        this.filhoIdade = validarIdade(filhoIdade, "filhoIdade");
 
 
         // Regras de negócio
-        validarIdadeMinimaPais(this.idadeMae, this.idadePai);
-        validarNomesDistintos(this.nomePai, this.nomeMae, this.nomeFilho);
+        validarIdadeMinimaPais(this.maeIdade, this.paiIdade);
+        validarNomesDistintos(this.paiNome, this.maeNome, this.filhoNome);
 
 
-        validarIdadeMinimaPais(this.idadeMae, this.idadePai);
-        validarNomesDistintos(this.nomePai, this.nomeMae, this.nomeFilho);
+        validarIdadeMinimaPais(this.maeIdade, this.paiIdade);
+        validarNomesDistintos(this.paiNome, this.maeNome, this.filhoNome);
 
         // Pais devem ser ≥ idade do filho + GAP mínimo
-        validarPaisFilho(this.idadeMae, this.idadePai, this.idadeFilho);
+        validarPaisFilho(this.maeIdade, this.paiIdade, this.filhoIdade);
 
         // Avós (se informados) ≥ idade dos pais + GAP dos avós
-        validarAvosPais(this.avosPaternosIdade, this.avosMaternosIdade, this.idadePai, this.idadeMae);
+        validarAvosPais(this.avosPaternosIdade, this.avosMaternosIdade, this.paiIdade, this.maeIdade);
 
 
 
@@ -67,11 +67,11 @@ public class Pessoa {
     public Integer getAvosPaternosIdade() { return avosPaternosIdade; }
     public String getAvosMaternosNome() { return avosMaternosNome; }
     public Integer getAvosMaternosIdade() { return avosMaternosIdade; }
-    public String getNomeMae() { return nomeMae; }
-    public int getIdadeMae() { return idadeMae; }
-    public String getNomePai() { return nomePai; }
-    public int getIdadePai() { return idadePai; }
-    public String getNomeFilho() { return nomeFilho; }
-    public int getIdadeFilho() { return idadeFilho; }
+    public String getMaeNome() { return maeNome; }
+    public int getMaeIdade() { return maeIdade; }
+    public String getPaiNome() { return paiNome; }
+    public int getPaiIdade() { return paiIdade; }
+    public String getFilhoNome() { return filhoNome; }
+    public int getFilhoIdade() { return filhoIdade; }
 
 }

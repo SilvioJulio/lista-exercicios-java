@@ -14,16 +14,16 @@ class ArvoreGenealogicaTest {
     @DisplayName("Dados válidos corretamente")
     void deveCriarComDadosValidos() {
         ArvoreGenealogica arvore = new ArvoreGenealogica(
-                "Felipe e Marcos", 80,
-                "Lucas e Sandra", 78,
-                "Renata", 35,
-                "Luiz Felipe", 44,
-                "Arthur Julio", 10
+                "Ivone", 65,
+                "Sandra", 73,
+                "Fernanda", 20,
+                "Luiz Felipe", 22,
+                "Arthur Julio", 7
         );
 
-        assertEquals("Luiz Felipe", arvore.getNomePai());
-        assertEquals("Renata", arvore.getNomeMae());
-        assertEquals("Arthur Julio", arvore.getNomeFilho());
+        assertEquals("Luiz Felipe", arvore.getPaiNome());
+        assertEquals("Fernanda", arvore.getMaeNome());
+        assertEquals("Arthur Julio", arvore.getFilhoNome());
     }
 
     @Test
@@ -31,7 +31,7 @@ class ArvoreGenealogicaTest {
     void idadePaiInsuficiente() {
         assertThrows(IllegalArgumentException.class, () ->
                 new ArvoreGenealogica(
-                        "Felipe e Marcos", 70,
+                        "Viviane", 70,
                         "Lucas e Sandra", 68,
                         "Renata", 25,
                         "Luiz", 30,
@@ -47,9 +47,9 @@ class ArvoreGenealogicaTest {
                 new ArvoreGenealogica(
                         "Felipe e Marcos", 70,
                         "Lucas e Sandra", 68,
-                        "Renata", 28,
+                        "Rebeca", 28,
                         "Luiz", 40,
-                        "Arthur", 20
+                        "Lucas", 20
                 )
         );
     }
@@ -94,9 +94,9 @@ class ArvoreGenealogicaTest {
         );
         assertEquals("Felipe e Marcos", arvore.getAvosPaternosNome());
         assertEquals("Lucas e Sandra", arvore.getAvosMaternosNome());
-        assertEquals("Renata Maria", arvore.getNomeMae());
-        assertEquals("Luiz Felipe", arvore.getNomePai());
-        assertEquals("Arthur Julio", arvore.getNomeFilho());
+        assertEquals("Renata Maria", arvore.getMaeNome());
+        assertEquals("Luiz Felipe", arvore.getPaiNome());
+        assertEquals("Arthur Julio", arvore.getFilhoNome());
     }
 
 }

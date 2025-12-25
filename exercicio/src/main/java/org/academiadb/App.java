@@ -1,6 +1,5 @@
 package org.academiadb;
 
-import org.academiadb.arvoreGenealogica.ArvoreGenealogica;
 
 public class App {
 

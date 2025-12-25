@@ -3,10 +3,10 @@ package org.academiadb.arvoreGenealogica;
 public final class ValidarNomeIdade {
 
 
-        private static final int MIN_IDADE_PAIS = 12;         // idade mínima aceitável para pai/mãe
-        private static final int MAX_IDADE_GERAL = 125;       // teto geral de idade
-        private static final int MIN_GAP_PARENT = 12;         // diferença mínima pai/mãe vs filho
-        private static final int IDADE_MIN_AVOS = 25;    // diferença mínima avós vs pais
+        private static final int MIN_IDADE_PAIS = 16;        // idade mínima aceitável para pai/mãe
+        private static final int MAX_IDADE_GERAL = 125;      // teto geral de idade
+        private static final int MIN_DIF_PAIS = 12;          // evitar que idade do filho, fique maior que aos dos pais
+        private static final int IDADE_MIN_AVOS = 25;        // diferença mínima avós vs pais
 
 
         public static String validarNomes(String valor, String campo) {
@@ -46,27 +46,27 @@ public final class ValidarNomeIdade {
             return idade;
         }
 
-        public static void validarIdadeMinimaPais(int idadeMae, int idadePai) {
-            if (idadeMae < MIN_IDADE_PAIS) {
-                throw new IllegalArgumentException("Regra: 'idadeMae' deve ser >= " + MIN_IDADE_PAIS + ".");
+        public static void validarIdadeMinimaPais(int maeIdade, int PaiIdade) {
+            if (maeIdade < MIN_IDADE_PAIS) {
+                throw new IllegalArgumentException("Regra: 'idade da mãe' deve ser >= " + MIN_IDADE_PAIS + ".");
             }
-            if (idadePai < MIN_IDADE_PAIS) {
-                throw new IllegalArgumentException("Regra: 'idadePai' deve ser >= " + MIN_IDADE_PAIS + ".");
+            if (PaiIdade < MIN_IDADE_PAIS) {
+                throw new IllegalArgumentException("Regra: 'Idade do pai' deve ser >= " + MIN_IDADE_PAIS + ".");
             }
         }
 
 
-        public static void validarPaisFilho(int idadeMae, int idadePai, int idadeFilho) {
-            if (idadeMae < idadeFilho + MIN_GAP_PARENT) {
+        public static void validarPaisFilho( int maeIdade, int paiIdade, int filhoIdade  ) {
+            if (maeIdade < filhoIdade + MIN_DIF_PAIS) {
                 throw new IllegalArgumentException(
-                        "Regra: 'idadeMae' deve ser pelo menos " + MIN_GAP_PARENT +
-                                " anos maior que 'idadeFilho'. Recebidos: idadeMae=" + idadeMae + ", idadeFilho=" + idadeFilho
+                        "Regra: 'Mae' deve ter idade " + MIN_DIF_PAIS +
+                                " anos maior que 'idade do seu filho'. Recebidos: Idade da mãe:" + maeIdade + ", => filho idade=" + filhoIdade
                 );
             }
-            if (idadePai < idadeFilho + MIN_GAP_PARENT) {
+            if (paiIdade < filhoIdade + MIN_DIF_PAIS) {
                 throw new IllegalArgumentException(
-                        "Regra: 'idadePai' deve ser pelo menos " + MIN_GAP_PARENT +
-                                " anos maior que 'idadeFilho'. Recebidos: idadePai=" + idadePai + ", idadeFilho=" + idadeFilho
+                        "Regra: 'idadePai' deve ser pelo menos " + MIN_DIF_PAIS +
+                                " anos maior que 'idade do filho'. Recebidos: Idade do pai =>" + paiIdade + ",filho idade" + filhoIdade
                 );
             }
         }
@@ -77,13 +77,13 @@ public final class ValidarNomeIdade {
             if (idadeAvosPaternos != null && idadeAvosPaternos < idadePai + IDADE_MIN_AVOS) {
                 throw new IllegalArgumentException(
                         "Regra: 'idadeAvosPaternos' deve ser pelo menos " + IDADE_MIN_AVOS +
-                                " anos maior que 'idadePai'. Recebidos: idadeAvosPaternos=" + idadeAvosPaternos + ", idadePai=" + idadePai
+                                " anos maior que 'idadePai'. Recebidos: idadeAvosPaternos=" + idadeAvosPaternos + ",  idade do pai=" + idadePai
                 );
             }
             if (idadeAvosMaternos != null && idadeAvosMaternos < idadeMae + IDADE_MIN_AVOS) {
                 throw new IllegalArgumentException(
                         "Regra: 'idadeAvosMaternos' deve ser pelo menos " + IDADE_MIN_AVOS +
-                                " anos maior que 'idadeMae'. Recebidos: idadeAvosMaternos=" + idadeAvosMaternos + ", idadeMae=" + idadeMae
+                                " anos maior que 'idadeMae'. Recebidos: idadeAvosMaternos=" + idadeAvosMaternos + ", idade da mãe=" + idadeMae
                 );
             }
         }

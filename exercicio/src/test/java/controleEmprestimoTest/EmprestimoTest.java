@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EmprestimoTest {
+class EmprestimoTest {
 
     private static final DateTimeFormatter FORMATTER_BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -41,9 +41,7 @@ public class EmprestimoTest {
 
 
         assertTrue(detalhes.contains(dataEmprestimoFormatada), "Detalhes devem conter a data de empréstimo formatada");
-         assertTrue(detalhes.contains(dataDevolucaoFormatada), "Detalhes devem conter a data de devolução formatada");
-
-
+        assertTrue(detalhes.contains(dataDevolucaoFormatada), "Detalhes devem conter a data de devolução formatada");
 
     }
     @Test
