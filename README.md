@@ -91,23 +91,16 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
 - **Mãe vs Filho:** nomes não podem ser iguais.
 
 
-### Version Control
-<p>
-  
-  <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" width="22" style="vertical-align: middle;">
-  <strong>GitHub</strong>
-</p>
-https://keyholesoftware.com/wp-content/uploads/Junit5.jpg.webp
 
-### Tools
-<p>
+<h4 id="technologies">🧰 Version Control</h4>
+- **GitHub**
 
-  <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/intellij.png" alt="IntelliJ" width="22" style="vertical-align: middle;">
-  <strong>IntelliJ IDEA</strong>
-</p>
+<h4 id="technologies">🔨 Tools</h4>
+- **IntelliJ IDEA**
 
-### Testes unitários
-<p>
-  <img src="https://keyholesoftware.com/wp-content/uploads/Junit5.jpg.webp" alt="IntelliJ" width="22" style="vertical-align: middle;">
-  <strong>Junit 5</strong>
-</p>
+<h4 id="technologies">💻 Tecnologia Utilizada</h4>
+- **Java 25**
+
+<h4 id="technologies">🧪 Testes unitários</h4>
+- **JUnit 5**
+
