@@ -101,6 +101,5 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
 <h4 id="technologies">💻 Tecnologia Utilizada</h4>
 - **Java 25**
 
-<h4 id="technologies">🧪 Testes unitários</h4>
-- **JUnit 5 **
+
 
