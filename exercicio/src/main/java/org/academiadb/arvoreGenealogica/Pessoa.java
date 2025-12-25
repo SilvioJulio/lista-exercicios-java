@@ -30,9 +30,7 @@ public class Pessoa {
 
         // método validarNomes verifica e faz o tratamento de erros dos campos nomes
         this.avosPaternosNome = validarNomes(avosPaternosNome, "avosPaternosNome");
-        this.avosPaternosIdade = avosPaternosIdade;
         this.avosMaternosNome = validarNomes(avosMaternosNome, "avosMaternosNome");
-        this.avosMaternosIdade = avosMaternosIdade;
         this.maeNome = validarNomes(nomeMae,          "maeNome:");
         this.paiNome = validarNomes(paiNome,          "paiNome:");
         this.filhoNome = validarNomes(filhoNome,        "filhoNome");
@@ -41,6 +39,8 @@ public class Pessoa {
         this.maeIdade = validarIdade(maeIdade,   "maeIdad");
         this.paiIdade = validarIdade(paiIdade,   "paiIdade");
         this.filhoIdade = validarIdade(filhoIdade, "filhoIdade");
+        this.avosMaternosIdade = validarIdade(avosMaternosIdade, "avosMaternosIdade");
+        this.avosPaternosIdade = validarIdade(avosPaternosIdade, "avosPaternosIdade");
 
 
         // Regras de negócio

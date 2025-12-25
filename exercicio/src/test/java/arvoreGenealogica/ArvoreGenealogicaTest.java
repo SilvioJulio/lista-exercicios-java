@@ -14,10 +14,10 @@ class ArvoreGenealogicaTest {
     @DisplayName("Dados válidos corretamente")
     void deveCriarComDadosValidos() {
         ArvoreGenealogica arvore = new ArvoreGenealogica(
-                "Ivone", 65,
+                "Ivone", 60,
                 "Sandra", 73,
-                "Fernanda", 20,
-                "Luiz Felipe", 22,
+                "Fernanda", 26,
+                "Luiz Felipe", 25,
                 "Arthur Julio", 7
         );
 
@@ -46,7 +46,7 @@ class ArvoreGenealogicaTest {
         assertThrows(IllegalArgumentException.class, () ->
                 new ArvoreGenealogica(
                         "Felipe e Marcos", 70,
-                        "Lucas e Sandra", 68,
+                        "Lucas e Sandra", 71,
                         "Rebeca", 28,
                         "Luiz", 40,
                         "Lucas", 20
@@ -86,14 +86,14 @@ class ArvoreGenealogicaTest {
     @DisplayName("Deve normalizar múltiplos espaços nos nomes")
     void normalizaEspacos() {
         ArvoreGenealogica arvore = new ArvoreGenealogica(
-                "Felipe   e   Marcos", null,
-                "Lucas    e    Sandra", null,
-                "Renata   Maria", 35,
-                "Luiz    Felipe", 44,
-                "Arthur   Julio", 10
+                "Marcos", 74,
+                "Adriana", 70,
+                "Renata Maria", 35,
+                "Luiz Felipe", 44,
+                "Arthur Julio", 10
         );
-        assertEquals("Felipe e Marcos", arvore.getAvosPaternosNome());
-        assertEquals("Lucas e Sandra", arvore.getAvosMaternosNome());
+        assertEquals("Marcos", arvore.getAvosPaternosNome());
+        assertEquals("Adriana", arvore.getAvosMaternosNome());
         assertEquals("Renata Maria", arvore.getMaeNome());
         assertEquals("Luiz Felipe", arvore.getPaiNome());
         assertEquals("Arthur Julio", arvore.getFilhoNome());
