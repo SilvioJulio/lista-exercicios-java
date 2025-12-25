@@ -93,15 +93,15 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
 
 
 
-<h4 id="technologies">🧰 Version Control</h4>
-- GitHub
+<
+### 💻 Tecnologia Utilizada
+- **Java 25**
 
-<h4 id="technologies">🔨 Tools</h4>
-- IntelliJ IDEA
+### 🧪 Testes Unitários
+- **JUnit 5**
 
-<h4 id="technologies">💻 Tecnologia Utilizada</h4>
-- Java 25
+### 🔨 Tools
+- **IntelliJ IDEA**
 
-<h4 id="technologies">🧪 Testes unitários</h4>
-- JUnit 5
-
+### 🌐 Version Control
+- **GitHub**
