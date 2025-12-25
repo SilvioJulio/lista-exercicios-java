@@ -86,6 +86,7 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
 - Idades de avós podem ser **opcionais** (`null`). Se fornecidas, são validadas.
 
 #### Nomes Distintos
+
 - **Pai vs Mãe:** nomes não podem ser iguais (ignora maiúsculas/minúsculas).
 - **Pai vs Filho:** nomes não podem ser iguais.
 - **Mãe vs Filho:** nomes não podem ser iguais.
@@ -93,13 +94,14 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
 
 
 <h4 id="technologies">🧰 Version Control</h4>
-- **GitHub**
+- GitHub
 
 <h4 id="technologies">🔨 Tools</h4>
-- **IntelliJ IDEA**
+- IntelliJ IDEA
 
 <h4 id="technologies">💻 Tecnologia Utilizada</h4>
-- **Java 25**
+- Java 25
 
-
+<h4 id="technologies">🧪 Testes unitários</h4>
+- JUnit 5
 
