@@ -91,9 +91,26 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
 - **Pai vs Filho:** nomes não podem ser iguais.
 - **Mãe vs Filho:** nomes não podem ser iguais.
 
+###  Questão 18 : Automóvel
 
+Projeto em Java simples tem como finalidade a criação de um sistema de gerenciamento de automóveis.
 
-<
+### ✅ Regras de Negócio
+- **Automóvel**
+    - Marca não pode ser vazia.
+    - Modelo não pode ser vazio.
+    - Ano de fabricação deve ser maior que 1885 (ano do primeiro automóvel).
+    - Placa deve seguir o formato padrão (ex.: "ABC-1234").
+    - Cor não pode ser vazia.
+    - Número do chassi deve ter exatamente 17 caracteres.
+    - Número de portas deve ser maior que 0.
+    - Capacidade do tanque deve ser maior que 0 litros.
+    - Quilometragem atual não pode ser negativa.
+
+    
+
+    
+    
 ### 💻 Tecnologia Utilizada
 - **Java 25**
 
