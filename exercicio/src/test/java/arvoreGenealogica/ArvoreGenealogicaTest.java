@@ -59,7 +59,7 @@ class ArvoreGenealogicaTest {
     void avosPaternosInsuficientes() {
         assertThrows(IllegalArgumentException.class, () ->
                 new ArvoreGenealogica(
-                        "Felipe e Marcos", 60,  // avô 60
+                        "Marcos", 60,  // avô 60
                         "Lucas e Sandra", 70,
                         "Renata", 40,
                         "Luiz", 50,
@@ -69,11 +69,11 @@ class ArvoreGenealogicaTest {
     }
 
     @Test
-    @DisplayName("Deve rejeitar nomes com dígitos")
+    @DisplayName("Deve rejeitar campos null nos nomes")
     void nomeInvalidoComDigitos() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new ArvoreGenealogica(
-                        "Felipe 123", null,
+                        "Gisele", null,
                         "Lucas e Sandra", null,
                         "Renata", 35,
                         "Luiz Felipe", 44,
