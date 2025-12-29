@@ -96,12 +96,12 @@ Projeto em Java simples tem como finalidade a criação de arvore Genealógica.
  - **Pai vs Filho:** nomes não podem ser iguais.
  - **Mãe vs Filho:** nomes não podem ser iguais.
 ---
-### Questão 18: Automóvel 
+### ✅ Questão 18: Automóvel 
 
 Resumo do módulo de Automóvel com validações e comportamentos específicos por tipo de veículo.
 
 
-### Regras de Negócio principais
+### ✅ Regras de Negócio principais
 - Marca, modelo e cor não podem ser vazios.
 - Placa deve seguir o formato padrão esperado pelo projeto (ex.: `OKU1234`).
 - Campos modelo, marcar, cor e placa não podem ser nulos ou vazios.
@@ -126,6 +126,24 @@ Resumo do módulo de Automóvel com validações e comportamentos específicos p
   - Validações no construtor.
   - Operações de ligar/desligar.
   - Regras específicas de cada classe (CarroAutomatico, MotoPartidaPedal, Guincho).
+
+---
+### ✅ Questão 19: Agenda telefônica
+
+Projeto em java que gerenciar uma agenda telefônica com funcionalidades de adicionar e remover contatos.
+
+### ✅ Regras de Negócio Testadas
+
+- **Contato**
+
+    - Nome não pode ser vazio.
+    - Número de telefone deve seguir o formato válido.
+  
+- **Agenda**
+    - **Adicionar contato:** não permite duplicatas.
+    - **Remover contato:** deve existir na agenda.
+    - **Buscar contato:** retorna o contato correto ou indica se não encontrado.
+    - **Listar contatos:** exibe todos os contatos ordenados por nome.
 
 
 
