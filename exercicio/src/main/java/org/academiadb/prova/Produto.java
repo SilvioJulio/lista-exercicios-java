@@ -1,6 +1,8 @@
 package org.academiadb.prova;
 
 
+import java.util.Locale;
+
 import static org.academiadb.prova.validacaoSuperMercado.ValidadorProduto.*;
 
 public class Produto {
@@ -31,9 +33,12 @@ public class Produto {
         this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
 
+
     @Override
     public String toString() {
-        return String.format("Produto{id=%d, nome='%s', preco=%.2f, estoque=%d}",
+        return String.format(Locale.US,
+                "Produto{id=%d, nome='%s', preco=%.2f, estoque=%d}",
                 id, nome, preco, quantidadeEmEstoque);
     }
+
 }

@@ -47,35 +47,32 @@ public class Menu {
         estoque.imprimeCatalogo();
     }
 
+
+
     private void cadastrarProduto(Scanner sc) {
-        //Gererar ID automático
-        estoque.gerarId(); int id = estoque.getId();
-        Produto gerarId = estoque.encontraProdutoPorId(id);
+        estoque.gerarId();
+        int id = estoque.getId();
+
+        if (estoque.encontraProdutoPorId(id) != null) {
+            System.out.println("ID do produto já cadastrado. Gerando novo ID...");
+            // tenta até encontrar outro id
+            do {
+                estoque.gerarId();
+                id = estoque.getId();
+            } while (estoque.encontraProdutoPorId(id) != null);
+        }
+
         String nome = lerLinha(sc, "Nome do produto: ");
         double preco = numeroDoubleValido(sc, "Preço (R$): ");
         int quantidade = numeroInteirovalido(sc, "Quantidade inicial em estoque: ");
 
-         //Produto gerarId = estoque.encontraProdutoPorId(id);
-         if (gerarId != null) {
-             System.out.println("ID do produto, já cadastrado.");
-             return;
-         }
-
-         Produto verificaId = estoque.encontraProdutoPorId(id);
-         if (verificaId != null) {
-             System.out.println("ID do produto, já cadastrado.");
-             return;
-         }
-
-        Produto existente = estoque.encontraProdutoPorId(id);
-        if (existente != null) {
-            System.out.println("Já existe produto com esse ID. Operação cancelada.");
-            return;
-        }
         Produto p = new Produto(id, nome, preco, quantidade);
         estoque.cadastrarProduto(p);
-        System.out.println("Produto cadastrado com sucesso.");
+
+        System.out.println("Produto cadastrado com sucesso. ID: " + id);
     }
+
+
 
     private void buscarProduto(Scanner sc) {
         System.out.println("\nBuscar produto por:");

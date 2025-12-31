@@ -1,40 +1,57 @@
 package org.academiadb.prova;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Estoque {
-    private int id = 1; // simples
-    private final List<Produto> listaDeProdutos = new ArrayList<>();
+    private final AtomicInteger contador = new AtomicInteger(0);
+    private final Map<Integer, Produto> porId = new HashMap<>();
+    private final Map<String, Integer> idPorNome = new HashMap<>();
 
-
-    public void cadastrarProduto(Produto p) {
-
-        if (p != null) listaDeProdutos.add(p);
-
+    public int gerarId() {
+        return contador.incrementAndGet();
     }
-    public void gerarId() {
-        this.id++;
+
+    public Produto encontraProdutoPorId(int id) {
+        return porId.get(id);
     }
 
     public Produto encontraProdutoPorNome(String nome) {
         if (nome == null) return null;
-        for (Produto p : listaDeProdutos) {
-            if (nome.equalsIgnoreCase(p.getNome())) return p;
-        }
-        return null;
+        Integer id = idPorNome.get(nome.toLowerCase(Locale.ROOT));
+        return id == null ? null : porId.get(id);
     }
 
-    public Produto encontraProdutoPorId(int id) {
-        for (Produto p : listaDeProdutos) {
-            if (p.getId() == id) return p;
+
+    public boolean cadastrarProduto(Produto p) {
+        if (p == null) return false;
+
+        if (porId.containsKey(p.getId())) {
+            return false;
         }
-        return null;
+
+        porId.put(p.getId(), p);
+        idPorNome.put(p.getNome().toLowerCase(Locale.ROOT), p.getId());
+        return true;
+    }
+
+
+    public int cadastrarComIdNovo(Produto p) {
+        if (p == null) throw new IllegalArgumentException("Produto não pode ser nulo");
+        int id;
+        do {
+            id = gerarId();
+        } while (porId.containsKey(id));
+        p.setId(id);
+        porId.put(id, p);
+        idPorNome.put(p.getNome().toLowerCase(Locale.ROOT), id);
+        return id;
     }
 
     public boolean darBaixaEmEstoque(int produtoId, int quantidadeParaDarBaixa) {
-        Produto p = encontraProdutoPorId(produtoId);
+        Produto p = porId.get(produtoId);
         if (p == null || quantidadeParaDarBaixa <= 0) return false;
         int atual = p.getQuantidadeEmEstoque();
         if (atual < quantidadeParaDarBaixa) return false;
@@ -53,27 +70,25 @@ public class Estoque {
 
     public int getQuantidadeAtualEmEstoque(Produto produto) {
         if (produto == null) return 0;
-        Produto p = encontraProdutoPorId(produto.getId());
+        Produto p = porId.get(produto.getId());
         return (p == null) ? 0 : p.getQuantidadeEmEstoque();
     }
 
     public boolean temEstoque(Produto produto, int quantidade) {
         if (produto == null || quantidade <= 0) return false;
-        Produto p = encontraProdutoPorId(produto.getId());
+        Produto p = porId.get(produto.getId());
         return p != null && p.getQuantidadeEmEstoque() >= quantidade;
     }
 
     public void imprimeCatalogo() {
         System.out.println("=== Catálogo de Produtos ===");
-        if (listaDeProdutos.isEmpty()) {
+        if (porId.isEmpty()) {
             System.out.println("Nenhum produto cadastrado.");
         } else {
-            for (Produto p : listaDeProdutos) {
-                System.out.println(p);
-            }
+            porId.values().forEach(System.out::println);
         }
     }
 
-    public List<Produto> getProdutos() { return new ArrayList<>(listaDeProdutos); }
-    public int getId() { return id; }
+    public List<Produto> getProdutos() { return new ArrayList<>(porId.values()); }
+    public int getId() { return contador.get(); }
 }
