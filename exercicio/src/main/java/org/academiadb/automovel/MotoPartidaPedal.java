@@ -13,6 +13,9 @@ public class MotoPartidaPedal extends Moto{
 
     public void puxarAcelerador() { this.aceleradorPuxado = true; }
 
+    public TipoTransmissao getTransmissao() {
+        return transmissao;
+    }
 
 
     @Override

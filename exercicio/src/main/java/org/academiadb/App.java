@@ -1,6 +1,5 @@
 package org.academiadb;
 
-import org.academiadb.agendaTelefonica.AgendaTelefonica;
 
 public class App {
 

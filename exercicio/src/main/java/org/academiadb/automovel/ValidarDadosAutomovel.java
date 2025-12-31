@@ -6,7 +6,7 @@ public final class ValidarDadosAutomovel {
     private ValidarDadosAutomovel() { /* utilitária */ }
 
 
-    public static String validarCarroAutomovel(String valor, String campo) {
+    public static String deveVerificarCamposAutomovel(String valor, String campo) {
 
         if (valor == null) {
             throw new IllegalArgumentException("Campo '" + campo + "' é obrigatório e não pode ser nulo.");

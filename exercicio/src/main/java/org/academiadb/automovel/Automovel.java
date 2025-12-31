@@ -1,6 +1,6 @@
 package org.academiadb.automovel;
 
-import static org.academiadb.automovel.ValidarDadosAutomovel.validarCarroAutomovel;
+import static org.academiadb.automovel.ValidarDadosAutomovel.deveVerificarCamposAutomovel;
 import static org.academiadb.automovel.ValidarDadosAutomovel.validarPlacaAutomovel;
 
 public class Automovel {
@@ -12,10 +12,10 @@ public class Automovel {
     private boolean ligado ;
 
     public Automovel(String modelo, String cor, int anoFabricacao, String marca, String placa, boolean ligado) {
-        this.modelo = validarCarroAutomovel(modelo, "modelo");
-        this.cor =  validarCarroAutomovel(cor, "cor");
+        this.modelo = deveVerificarCamposAutomovel(modelo, "modelo");
+        this.cor =  deveVerificarCamposAutomovel(cor, "cor");
         this.anoFabricacao =anoFabricacao;
-        this.marca =  validarCarroAutomovel(marca, "marca");
+        this.marca =  deveVerificarCamposAutomovel(marca, "marca");
         this.placa =  validarPlacaAutomovel(placa);
         this.ligado = ligado;
     }
