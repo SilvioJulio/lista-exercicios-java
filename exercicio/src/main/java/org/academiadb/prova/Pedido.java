@@ -80,8 +80,6 @@ public class Pedido {
 
     public double getValorTotalPedido() { return valorTotalPedido; }
 
-    public void setValorTotalPedido(double valorTotalPedido) { this.valorTotalPedido = valorTotalPedido; }
-
 
     public double calcularTroco(double valorPago) {
         calculateValorTotalPedido();
@@ -115,44 +113,28 @@ public class Pedido {
         // Notas
         for (int i = 0; i < notas.length; i++) {
             int qtd = centavos / notas[i];
-            if (qtd > 0) {
-                resultado.put(nomesNotas[i], qtd);
-                centavos -= qtd * notas[i];
-            }
-        }
+            if (qtd > 0) { resultado.put(nomesNotas[i], qtd); centavos -= qtd * notas[i];}}
 
-        //
         for (int i = 0; i < moedas.length; i++) {
             int qtd = centavos / moedas[i];
             if (qtd > 0) {
                 resultado.put(nomesMoedas[i], qtd);
                 centavos -= qtd * moedas[i];
-            }
-        }
-
-        return resultado;
-    }
+            } }return resultado;}
 
     public void imprimirDistribuicaoTroco(Map<String, Integer> distribuicao) {
         if (distribuicao == null || distribuicao.isEmpty()) {
-            System.out.println("Nenhuma cédula/moeda necessária.");
-            return;
-        }
+            System.out.println("Nenhuma cédula/moeda necessária.");return;}
+
         System.out.println("=== Menor quantidade de cédulas/moedas ===");
-        for (Map.Entry<String, Integer> e : distribuicao.entrySet()) {
-            System.out.printf("%s: %d%n", e.getKey(), e.getValue());
-        }
-    }
+        for (Map.Entry<String, Integer> e : distribuicao.entrySet()) { System.out.printf("%s: %d%n", e.getKey(), e.getValue());}}
 
 
     public void removerItemPorIndice(int indice) {
         if (indice < 0 || indice >= itens.size()) {
             // índice inválido, não faz nada
-            return;
-        }
-        itens.remove(indice);
-        calculateValorTotalPedido();
-    }
+            return;}
+        itens.remove(indice);calculateValorTotalPedido();}
 
 
     public void adicionarItem(Produto produto, int novaQtd) {
@@ -164,19 +146,11 @@ public class Pedido {
                 // Atualiza a quantidade do item existente
                 it.setQuantidade(novaQtd);
                 // Recalcula o preço total do item (assumindo que Item recalcula internamente)
-                // Se o Item não recalcular automaticamente, faça:
-                // i.setValorDoItem(produto.getPreco() * novaQtd);
-                calculateValorTotalPedido();
-                return;
-            }
-        }
+                calculateValorTotalPedido();return;}}
 
         // Não existia -> adiciona novo
-        itens.add(new Item(produto, novaQtd));
-        calculateValorTotalPedido();
-    }
+        itens.add(new Item(produto, novaQtd));calculateValorTotalPedido();}
 
-    /** Alias conveniente para manter compatibilidade com o Menu. */
     public void calcularValorTotal() {
         calculateValorTotalPedido();
     }

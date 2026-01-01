@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class AgendaTest {
     @Test
-    @DisplayName("Teste adicionar contato")
-    public void testeAdicionarContato() {
+
+    public void deveAdicionarContatoTest() {
         AgendaTelefonica agenda = new AgendaTelefonica();
         agenda.addicionarContato("Silvio Julio", "71997377059");
 
@@ -21,8 +21,7 @@ public class AgendaTest {
     }
 
     @Test
-    @DisplayName("Teste listar contatos")
-    public void testeListarContatos() {
+    public void devListarContatosTest() {
         AgendaTelefonica agenda = new AgendaTelefonica();
         agenda.addicionarContato("Ana Maria", "71999990001");
         agenda.addicionarContato("Carlos Silva", "71999990002");

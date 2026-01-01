@@ -25,7 +25,7 @@ public class ProdutoTest {
     void testarToStringProduto() {
         Produto produto = new Produto(1, "Feijão", 8.50, 10);
 
-        String esperado = "Produto{id=1, nome='Feijão', preco=8.50, estoque=10}";
+        String esperado = "Produto{id= 1|nome= 'Feijão'|preco= 8.50| quantidadeEmEstoque= 10}";
         assertEquals(esperado, produto.toString());
 
     }
@@ -49,7 +49,7 @@ public class ProdutoTest {
 
 
     @Test
-    void testarValidacaoNomeProdutoVazio() {
+    void testarValidacaoNomeProdutoNulo(){
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             new Produto(1, null, 10.40, 5);
@@ -59,12 +59,32 @@ public class ProdutoTest {
     }
 
     @Test
-    void testarValidacaoNomeProdutoNulo() {
+    void  testarValidacaoNomeProdutoVazio(){
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             new Produto(1, " ", 10.40, 5);
         });
         assertEquals("O campo: nome não pode ser nulo ou vazio.", ex.getMessage());
     }
+    @Test
+    void deveValidarSoLetrasNoNomeProduto(){
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            new Produto(1, "Arroz123", 10.40, 5);
+        });
+        assertEquals("O campo: nome deve conter letras", ex.getMessage());
+    }
+
+    @Test
+    void deveAceitarLetrasComEspacoSimples() {
+        Produto produto = new Produto(1, "Feijão Carioca", 10.40, 5);
+        assertEquals("Feijão Carioca", produto.getNome());
+    }
+
+    @Test
+    void deveAceitarApenasLetrasSemEspacos() {
+        Produto produto = new Produto(1, "Arroz", 10.40, 5);
+        assertEquals("Arroz", produto.getNome());
+    }
+
 
 }
 

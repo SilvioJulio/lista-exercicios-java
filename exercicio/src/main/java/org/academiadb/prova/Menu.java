@@ -11,8 +11,7 @@ public class Menu {
 
     public Menu(Estoque estoque, Pedido pedido) {
         this.estoque = estoque;
-        this.pedido = pedido;
-    }
+        this.pedido = pedido; }
 
     public void controlaMenu() {
         try (Scanner sc = new Scanner(System.in)) {
@@ -42,12 +41,8 @@ public class Menu {
         }
     }
 
-
     private void mostrarEstoque() {
-        estoque.imprimeCatalogo();
-    }
-
-
+        estoque.imprimeCatalogo();}
 
     private void cadastrarProduto(Scanner sc) {
         estoque.gerarId();
@@ -76,8 +71,8 @@ public class Menu {
 
     private void buscarProduto(Scanner sc) {
         System.out.println("\nBuscar produto por:");
-        System.out.println("1) ID");
-        System.out.println("2) Nome");
+        System.out.println("[1] = ID");
+        System.out.println("[2] = Nome");
         int op = numeroInteirovalido(sc, "Escolha: ");
 
         Produto p;
@@ -108,9 +103,12 @@ public class Menu {
             System.out.println("Quantidade inválida.");
             return;
         }
+        System.out.println("===================================================");
         p.setQuantidadeEmEstoque(p.getQuantidadeEmEstoque() + qtd);
         System.out.printf("Estoque de %s atualizado para %d.%n",
                 p.getNome(), p.getQuantidadeEmEstoque());
+        System.out.println("===================================================");
+
     }
 
     private void darBaixaEmEstoque(Scanner sc) {
@@ -135,8 +133,6 @@ public class Menu {
         System.out.println(ok ? "Baixa realizada com sucesso."
                 : "Não foi possível realizar a baixa (produto/quantidade inválidos).");
     }
-
-
 
 
     private void adicionarItemAoPedido(Scanner sc) {
@@ -259,7 +255,6 @@ public class Menu {
         pedido.limparCarrinho();
     }
 
-    // ================== Utilitários ==================
 
     private void imprimirCabecalho() {
         System.out.println("\n========= SuperMercado =========");
@@ -305,29 +300,30 @@ public class Menu {
 
     private String gerarReciboTexto(List<Item> itens, double total, double valorPago, double troco) {
 
-            String recibo = "-------------------# Recibo #------------------------\n" +
-                            String.format("%-20s %5s %10s%n", "Produto",   "Qtd",   "Total(R$)") +
-                            "---------------------------------------------------------------\n";
+            StringBuilder recibo = new StringBuilder
+
+                    ("================ RECIBO ================\n" +
+                    String.format("%-20s %5s %10s%n", "Produto", "Qtd", "Total") +
+                    "----------------------------------------------\n");
 
             if (itens == null || itens.isEmpty()) {
-                recibo += "** Sem itens **\n";
+                recibo.append("** Sem itens **\n");
             } else {
                 for (Item i : itens) {
-                    recibo += String.format("%-20s %5d %10.2f%n",
+                    recibo.append(String.format("%-20s %5d %10.2f%n",
                             i.getProduto().getNome(),
                             i.getQuantidade(),
-                            i.getPrecoTotal());
+                            i.getPrecoTotal()));
                 }
             }
-            recibo += "----------------------------------------------\n" +
-                            String.format("TOTAL: R$ %.2f%n", total) +
-                            String.format("PAGO : R$ %.2f%n", valorPago) +
-                            String.format("TROCO: R$ %.2f%n", troco) +
-                      "==============================================\n";
+            recibo.append("----------------------------------------------\n").append
+                    (String.format("TOTAL: R$ %.2f%n", total))
+                    .append(String.format("PAGO : R$ %.2f%n", valorPago))
+                    .append(String.format("TROCO: R$ %.2f%n", troco))
+                    .append("==============================================\n");
 
-            return recibo;
+            return recibo.toString();
         }
-
 
 
         private void imprimirRecibo(String reciboTexto) {

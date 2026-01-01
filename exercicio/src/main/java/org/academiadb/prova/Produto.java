@@ -36,8 +36,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return String.format(Locale.US,
-                "Produto{id=%d, nome='%s', preco=%.2f, estoque=%d}",
+        return String.format(Locale.US, "Produto{id= %d|nome= '%s'|preco= %.2f| quantidadeEmEstoque= %d}",
                 id, nome, preco, quantidadeEmEstoque);
     }
 

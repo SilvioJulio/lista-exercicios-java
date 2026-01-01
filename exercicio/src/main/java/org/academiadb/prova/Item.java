@@ -1,5 +1,7 @@
 package org.academiadb.prova;
 
+import java.util.Locale;
+
 import static org.academiadb.prova.validacaoSuperMercado.ValidadorItem.validarQuantidadeItem;
 
 public class Item {
@@ -37,7 +39,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format(
+        return String.format(Locale.US,
                 "Item{produto=%s, qtd=%d, total=R$ %.2f}",
                 produto.getNome(), quantidade, precoTotal
         );
