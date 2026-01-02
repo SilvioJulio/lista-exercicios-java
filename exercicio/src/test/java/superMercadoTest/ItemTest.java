@@ -1,7 +1,6 @@
 package superMercadoTest;
 
 import org.academiadb.prova.Item;
-import org.academiadb.prova.Pedido;
 import org.academiadb.prova.Produto;
 import org.junit.jupiter.api.Test;
 

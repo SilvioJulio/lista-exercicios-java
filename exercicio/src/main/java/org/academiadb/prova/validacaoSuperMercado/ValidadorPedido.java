@@ -12,16 +12,21 @@ public final class ValidadorPedido {
         throw new IllegalStateException("Classe utilitária");
     }
 
-    public static void validarPedidoBasico(Pedido pedido) {
-        if (pedido == null) {
-            throw new IllegalArgumentException("Pedido nulo.");
+    public static List<Item> validarPedidoBasico(List<Item> itens, String campo) {
+        if (itens == null) {
+            throw new IllegalArgumentException("O campo: " + campo + " não pode ser nulo.");
         }
-        List<Item> itens = pedido.getItens();
-        if (itens == null || itens.isEmpty()) {
-            throw new IllegalArgumentException("Pedido sem itens.");
-        }
+
+        return itens;
     }
 
+    public  static Double validarValorTotalPedido(Double valorTotalPedido, String campo) {
+        if (valorTotalPedido == null || valorTotalPedido < 0) {
+            throw new IllegalArgumentException("O campo: " + campo + " não pode ser nulo ou negativo.");
+        }
+
+        return valorTotalPedido;
+    }
 
 
 }

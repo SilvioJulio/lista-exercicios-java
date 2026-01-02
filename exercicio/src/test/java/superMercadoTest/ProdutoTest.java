@@ -85,6 +85,14 @@ public class ProdutoTest {
         assertEquals("Arroz", produto.getNome());
     }
 
+    @Test
+    void naoDeveValidarNomeProdutoComMenosDeDoisCaracteres (){
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            new Produto(1, "A", 10.40, 5);
+        });
+        assertEquals("O campo: nome deve ter pelo menos 2 caracteres.", ex.getMessage());
+    }
+
 
 }
 

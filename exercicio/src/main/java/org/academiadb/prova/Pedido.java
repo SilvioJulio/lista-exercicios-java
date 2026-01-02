@@ -1,6 +1,7 @@
 
 package org.academiadb.prova;
 
+
 import org.academiadb.prova.validacaoSuperMercado.ValidadorItem;
 
 import java.util.ArrayList;
@@ -8,13 +9,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.academiadb.prova.validacaoSuperMercado.ValidadorPedido.*;
+
 public class Pedido {
     private ArrayList<Item> itens;
-    private double valorTotalPedido;
+    private double valorTotalPedido =  0.0 ;
 
     public Pedido() {
-        this.itens = new ArrayList<>();
-        this.valorTotalPedido = 0.0;
+        this.itens = (ArrayList<Item>) validarPedidoBasico (new ArrayList<>(), "itens");
+        this.valorTotalPedido = validarValorTotalPedido (valorTotalPedido, "valorTotalPedido");
     }
 
     public void calculateValorTotalPedido() {
@@ -34,7 +37,7 @@ public class Pedido {
     }
 
 
-    public void adicionarItemNaLista(List<Item> novosItens) {
+   public void adicionarItemNaLista(List<Item> novosItens) {
         // valida a lista e cada item
         ValidadorItem.validarLista(novosItens);
         for (Item it : novosItens) {
@@ -70,7 +73,10 @@ public class Pedido {
         this.valorTotalPedido = 0.0;
     }
 
-    public ArrayList<Item> getItens() { return new ArrayList<>(itens); }
+    public ArrayList<Item> getItens() {
+
+        return new ArrayList<>(itens);
+    }
 
     public void setItens(ArrayList<Item> itens) {
         this.itens = (itens == null) ? new ArrayList<>() : itens;

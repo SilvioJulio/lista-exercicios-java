@@ -25,12 +25,12 @@ public class Item {
     }
 
 
-    public void setQuantidade(int novaQtd) {
-        if (novaQtd <= 0) {
+    public void setQuantidade(int novaQuantidade) {
+        if (novaQuantidade <= 0) {
             return;
         }
-        this.quantidade = novaQtd;
-        this.precoTotal = produto.getPreco() * novaQtd;
+        this.quantidade = novaQuantidade;
+        this.precoTotal = produto.getPreco() * novaQuantidade;
     }
 
     public double getPrecoTotal() {

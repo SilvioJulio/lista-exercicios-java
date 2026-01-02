@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-
 public class Menu {
     private final Estoque estoque;
     private final Pedido pedido;
 
     public Menu(Estoque estoque, Pedido pedido) {
         this.estoque = estoque;
-        this.pedido = pedido; }
+        this.pedido = pedido;
+    }
 
     public void controlaMenu() {
         try (Scanner sc = new Scanner(System.in)) {
@@ -42,7 +42,8 @@ public class Menu {
     }
 
     private void mostrarEstoque() {
-        estoque.imprimeCatalogo();}
+        estoque.imprimeCatalogo();
+    }
 
     private void cadastrarProduto(Scanner sc) {
         estoque.gerarId();
@@ -66,8 +67,6 @@ public class Menu {
 
         System.out.println("Produto cadastrado com sucesso. ID: " + id);
     }
-
-
 
     private void buscarProduto(Scanner sc) {
         System.out.println("\nBuscar produto por:");
@@ -108,7 +107,6 @@ public class Menu {
         System.out.printf("Estoque de %s atualizado para %d.%n",
                 p.getNome(), p.getQuantidadeEmEstoque());
         System.out.println("===================================================");
-
     }
 
     private void darBaixaEmEstoque(Scanner sc) {
@@ -118,7 +116,7 @@ public class Menu {
         int op = numeroInteirovalido(sc, "Escolha: ");
         int qtd = numeroInteirovalido(sc, "Quantidade para dar baixa: ");
 
-        boolean ok ;
+        boolean ok;
         if (op == 1) {
             int id = numeroInteirovalido(sc, "ID do produto: ");
             ok = estoque.darBaixaEmEstoque(id, qtd);
@@ -133,7 +131,6 @@ public class Menu {
         System.out.println(ok ? "Baixa realizada com sucesso."
                 : "Não foi possível realizar a baixa (produto/quantidade inválidos).");
     }
-
 
     private void adicionarItemAoPedido(Scanner sc) {
         int id = numeroInteirovalido(sc, "ID do produto: ");
@@ -153,51 +150,103 @@ public class Menu {
             return;
         }
 
+        // Se o método adicionarItem já atualiza quando o produto existe, ótimo.
+        // Caso contrário, ajuste para usar um método de atualização do Pedido.
         pedido.adicionarItem(p, qtd);
         System.out.println("Item adicionado/atualizado no pedido.");
     }
 
+
     private void alterarQuantidadeItemPedido(Scanner sc) {
-        verPedido();
+
         List<Item> itens = pedido.getItens();
-        if (itens.isEmpty()) {
+        if (itens == null || itens.isEmpty()) {
             System.out.println("Pedido vazio.");
             return;
         }
 
-        int indice = numeroInteirovalido(sc, "Informe o índice do item (1..n): ") - 1;
-        if (indice < 0 || indice >= itens.size()) {
-            System.out.println("Índice inválido.");
-            return;
+        // Exibir itens numerados
+        System.out.println("=== Itens do Pedido ===");
+        for (int i = 0; i < itens.size(); i++) {
+            Item it = itens.get(i);
+            System.out.printf("%d) %s | Quantidade atual: %d | Total: R$ %.2f%n",
+                    i + 1,
+                    it.getProduto().getNome(),
+                    it.getQuantidade(),
+                    it.getPrecoTotal());
+        }
+
+        // Seleção do item
+        int indice;
+        while (true) {
+            String promptSelecao = (itens.size() == 1)
+                    ? "Selecione o item (digite 1): "
+                    : "Digite o número do item que deseja alterar (1 a " + itens.size() + "): ";
+            int entrada = numeroInteirovalido(sc, promptSelecao);
+            indice = entrada - 1;
+            if (indice >= 0 && indice < itens.size()) break;
+            System.out.println("Número inválido. Digite um valor entre 1 e " + itens.size() + ".");
         }
 
         Item item = itens.get(indice);
-        int novaQtd = numeroInteirovalido(sc, "Nova quantidade: ");
-        if (novaQtd <= 0) {
-            System.out.println("Quantidade inválida.");
-            return;
+        int quantidadeAtual = item.getQuantidade();
+        Produto produto = item.getProduto();
+
+        int novaQtd;
+        while (true) {
+            novaQtd = numeroInteirovalido(sc,
+                    "Quantidade atual: " + quantidadeAtual +
+                            ". Digite nova quantidade pode ser maior ou menor que a atual: ");
+            if (novaQtd > 0) break;
+            System.out.println("Quantidade inválida. Digite um número quantidade pode ser maior ou menor que a atual.");
         }
-        if (!estoque.temEstoque(item.getProduto(), novaQtd)) {
-            System.out.println("Estoque insuficiente para a nova quantidade.");
+
+        // Verificar estoque
+        if (!estoque.temEstoque(produto, novaQtd)) {
+            System.out.println("Estoque insuficiente para a quantidade informada.");
             return;
         }
 
-        pedido.adicionarItem(item.getProduto(), novaQtd);
+        item.setQuantidade(novaQtd);
+
         pedido.calcularValorTotal();
-        System.out.println("Quantidade atualizada.");
+        System.out.printf("Quantidade atualizada: %s agora tem %d unidades.%n",
+                produto.getNome(), novaQtd);
     }
+
 
     private void removerItemDoPedido(Scanner sc) {
         verPedido();
         List<Item> itens = pedido.getItens();
-        if (itens.isEmpty()) {
+        if (itens == null || itens.isEmpty()) {
             System.out.println("Pedido vazio.");
             return;
         }
 
-        int indice = numeroInteirovalido(sc, "Informe o índice do item (1..n): ") - 1;
+        // Exibir itens numerados para facilitar a escolha
+        System.out.println("=== Itens do Pedido ===");
+        for (int i = 0; i < itens.size(); i++) {
+            Item it = itens.get(i);
+            System.out.printf("%d) %s | Quantidade: %d | Total: R$ %.2f%n",
+                    i + 1,
+                    it.getProduto().getNome(),
+                    it.getQuantidade(),
+                    it.getPrecoTotal());
+        }
+
+        // Escolha com validação
+        int indice;
+        while (true) {
+            int entrada = numeroInteirovalido(sc,
+                    "Digite o número do item que deseja remover (1 a " + itens.size() + "): ");
+            indice = entrada - 1;
+            if (indice >= 0 && indice < itens.size()) break;
+            System.out.println("Número inválido. Digite um valor entre 1 e " + itens.size() + ".");
+        }
+
         pedido.removerItemPorIndice(indice);
-        System.out.println("Item removido (se existir).");
+        pedido.calcularValorTotal();
+        System.out.println("Item removido.");
     }
 
     private void verPedido() {
@@ -205,11 +254,10 @@ public class Menu {
         pedido.imprimirPedido();
     }
 
-    // ================== FINALIZAÇÃO (pagamento + troco + recibo + baixa) ==================
 
     private void finalizarPedido(Scanner sc) {
         List<Item> itens = pedido.getItens();
-        if (itens.isEmpty()) {
+        if (itens == null || itens.isEmpty()) {
             System.out.println("Pedido vazio.");
             return;
         }
@@ -229,7 +277,7 @@ public class Menu {
 
         // Pagamento + troco
         pedido.calcularValorTotal();
-        double total = pedido.getValorTotalPedido();
+        double total = pedido.getValorTotalPedido(); // mantenha consistente com sua classe
         System.out.println("Total a pagar: R$ " + String.format("%.2f", total));
 
         double valorPago = numeroDoubleValido(sc, "Valor pago (R$): ");
@@ -255,7 +303,6 @@ public class Menu {
         pedido.limparCarrinho();
     }
 
-
     private void imprimirCabecalho() {
         System.out.println("\n========= SuperMercado =========");
         System.out.println("1) Listar estoque");
@@ -271,62 +318,81 @@ public class Menu {
         System.out.println("0) Sair");
     }
 
-    // Só vai dar loop até o usuário digitar um inteiro válido
-    private int numeroInteirovalido(Scanner tc, String prompt) {
-        System.out.print(prompt);
-        while (!tc.hasNextInt()) {
-            System.out.print("Digite um número inteiro válido: ");
-            tc.next();
+    // ========= Entrada robusta (lendo por linha e convertendo) =========
+
+    // Inteiro válido (loop até ser válido)
+    private int numeroInteirovalido(Scanner sc, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String linha = sc.nextLine().trim();
+            try {
+                return Integer.parseInt(linha);
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite um número inteiro.");
+            }
         }
-        return tc.nextInt();
     }
 
-    // Só vai dar loop até o usuário digitar um double válido
-    private double numeroDoubleValido(Scanner tc, String prompt) {
-        System.out.print(prompt);
-        while (!tc.hasNextDouble()) {
-            System.out.print("Digite um número válido (ex.: 12.34): ");
-            tc.next();
+
+    private double numeroDoubleValido(Scanner sc, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String linha = sc.nextLine().trim();
+
+            if (linha.isEmpty()) {
+                System.out.println("Entrada vazia. Digite um valor (ex.: 12,34).");
+                continue;
+            }
+
+            linha = linha.replace("R$", "").trim();
+
+            if (linha.contains(",")) {
+                linha = linha.replace(".", "");
+            }
+            linha = linha.replace(",", ".");
+
+            try {
+                return Double.parseDouble(linha);
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite um número válido (ex.: 12,34).");
+            }
         }
-        return tc.nextDouble();
     }
+
 
     private String lerLinha(Scanner sc, String prompt) {
         System.out.print(prompt);
-        sc.nextLine(); // consome eventual \n pendente
-        return sc.nextLine();
+        return sc.nextLine().trim();
     }
 
-
     private String gerarReciboTexto(List<Item> itens, double total, double valorPago, double troco) {
+        StringBuilder recibo = new StringBuilder(
+                "================ RECIBO ================\n" +
+                        String.format("%-20s %5s %10s%n", "Produto", "Qtd", "Total") +
+                        "----------------------------------------------\n"
+        );
 
-            StringBuilder recibo = new StringBuilder
-
-                    ("================ RECIBO ================\n" +
-                    String.format("%-20s %5s %10s%n", "Produto", "Qtd", "Total") +
-                    "----------------------------------------------\n");
-
-            if (itens == null || itens.isEmpty()) {
-                recibo.append("** Sem itens **\n");
-            } else {
-                for (Item i : itens) {
-                    recibo.append(String.format("%-20s %5d %10.2f%n",
-                            i.getProduto().getNome(),
-                            i.getQuantidade(),
-                            i.getPrecoTotal()));
-                }
+        if (itens == null || itens.isEmpty()) {
+            recibo.append("** Sem itens **\n");
+        } else {
+            for (Item i : itens) {
+                recibo.append(String.format("%-20s %5d %10.2f%n",
+                        i.getProduto().getNome(),
+                        i.getQuantidade(),
+                        i.getPrecoTotal()));
             }
-            recibo.append("----------------------------------------------\n").append
-                    (String.format("TOTAL: R$ %.2f%n", total))
-                    .append(String.format("PAGO : R$ %.2f%n", valorPago))
-                    .append(String.format("TROCO: R$ %.2f%n", troco))
-                    .append("==============================================\n");
-
-            return recibo.toString();
         }
 
+        recibo.append("----------------------------------------------\n")
+                .append(String.format("TOTAL: R$ %.2f%n", total))
+                .append(String.format("PAGO : R$ %.2f%n", valorPago))
+                .append(String.format("TROCO: R$ %.2f%n", troco))
+                .append("==============================================\n");
 
-        private void imprimirRecibo(String reciboTexto) {
+        return recibo.toString();
+    }
+
+    private void imprimirRecibo(String reciboTexto) {
         System.out.println(reciboTexto);
     }
 
@@ -337,3 +403,4 @@ public class Menu {
         menu.controlaMenu();
     }
 }
+

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PedidoTrocoTest {
+class PedidoTest {
 
     @Test
     void calcularTrocoInsuficienteDeveRetornarNegativoEMensagem() {
@@ -44,6 +44,26 @@ class PedidoTrocoTest {
         Pedido p = new Pedido();
         Map<String, Integer> dist = p.calcularMenorQuantidadeDeCedulasEMoedas(-5.0);
         assertTrue(dist.isEmpty());
+    }
+
+    @Test
+    void calcularTrocoExatoDeveRetornarZero() {
+        Pedido p = new Pedido();
+        Produto prod = new Produto(1, "Produto Teste", 10.00, 5);
+        p.adicionarItemNaLista(prod, 2); // total 20.00
+
+        double troco = p.calcularTroco(20.00);
+        assertEquals(0.0, troco, 0.0001);
+    }
+
+    @Test
+    void calcularTrocoMaiorDeveRetornarValorCorreto() {
+        Pedido p = new Pedido();
+        Produto prod = new Produto(1, "Produto Teste", 15.00, 5);
+        p.adicionarItemNaLista(prod, 2); // total 30.00
+
+        double troco = p.calcularTroco(50.00);
+        assertEquals(20.0, troco, 0.0001);
     }
 }
 
