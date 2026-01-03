@@ -33,7 +33,7 @@ public class Menu {
             case 7 -> alterarQuantidadeItemPedido(input);
             case 8 -> removerItemDoPedido(input);
             case 9 -> verPedido();
-            case 10 -> finalizarPedido(input); // pagamento + troco + recibo + baixa
+            case 10 -> finalizarPedido(input);
             case 0 -> System.out.println("Saindo...");
             default -> System.out.println("Opção inválida.");
         }
@@ -54,7 +54,7 @@ public class Menu {
         // Validação simples de duplicidade
         if (estoque.getIdPorNome().containsKey(chave)) {
             System.out.println("Já existe no estoque. Escolha outro nome.");
-            return; // interrompe cadastro
+            return;
         }
 
         double preco = numeroDoubleValido(input, "Preço (R$): ");

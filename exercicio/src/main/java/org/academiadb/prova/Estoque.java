@@ -19,10 +19,8 @@ public class Estoque {
         return idPorNome;
     }
 
-
     private String normalizarNome(String nome) {
         if (nome == null) return null;
-
 
         return nome.trim().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT);
     }
@@ -109,9 +107,11 @@ public class Estoque {
         if (atual < quantidadeParaDarBaixa) return false;
 
         int novo = atual - quantidadeParaDarBaixa;
+
+
         // se você também quer validar estoque mínimo por nome:
         if (novo < produto.getEstoqueMinimo()) {
-            return false; // ou lançar exceção, dependendo do seu contrato
+            return false;
         }
 
         produto.setQuantidadeEmEstoque(novo);

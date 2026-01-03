@@ -145,22 +145,39 @@ Projeto em java que gerenciar uma agenda telefônica com funcionalidades de adic
     - **Buscar contato:** retorna o contato correto ou indica se não encontrado.
     - **Listar contatos:** exibe todos os contatos ordenados por nome.
 
-### ✅ Prova 
+---
 
-# SuperMercado
+### Descrição do projeto
+      
+O projeto SuperMercadoProva simula o sistema de  gerenciamento de vendas de um supermercado, com controle de
+estoque, verificação da existência produtos escolhidos no pedido e demais funcionalidades descritas no diagrama de classes do mesmo.
 
-Sistema completo em **Java** para gerenciamento de estoque e pedidos em um supermercado.
-Inclui regras de negócio, validações robustas e interação via terminal com prompts.
+---
+### Tarefas da Prova:
+
+### a. Corrigir o bug *(Fácil)*
+- Identificar e corrigir um erro existente no código para garantir o funcionamento correto do sistema.
+
+### b. Desenvolver um método para cálculo do troco *(Médio)*
+- Criar um método que:
+    - Receba um valor pago pelo cliente.
+    - Retorne o valor do troco com base no total da compra.
+
+### c. Desenvolver um método para calcular a menor quantidade de notas *(Difícil)*
+- Criar um método que:
+    - Receba o valor do troco.
+    - Calcule a menor quantidade possível de notas para entregar ao cliente.
 
 ---
 
-## 📌 Descrição Geral
-Este projeto permite cadastrar produtos, controlar estoque, gerenciar pedidos, calcular troco e emitir recibos.
-Todas as operações seguem regras de negócio para garantir consistência e evitar erros comuns.
+### Diagrama de Classes
+Abaixo está o diagrama de classes que representa a estrutura do sistema:
 
----
 
-## ✅ Funcionalidades
+
+![Diagrama de Classes](exercicio/src/imagem/diagramaClasses.png)
+
+###  Funcionalidades
 - Cadastrar produtos (nome, preço, quantidade)
 - Listar estoque
 - Repor estoque
@@ -171,7 +188,7 @@ Todas as operações seguem regras de negócio para garantir consistência e evi
 
 ---
 
-## 🔒 Regras de Negócio
+### 🔒 Regras de Negócio
 - Nome do produto:
     - Não pode ser nulo ou vazio
     - Não pode ser duplicado
@@ -186,7 +203,7 @@ Todas as operações seguem regras de negócio para garantir consistência e evi
 
 ---
 
-## 🛠 Estrutura do Projeto
+### 🛠 Estrutura do Projeto
 ```
 src/
  ├── org/academiadb/prova/
@@ -200,22 +217,13 @@ src/
 
 ---
 
-## 💻 Tecnologias Utilizadas
-- **Java 17+**
-- Estruturas de dados: `Map`, `List`
-- Validações com exceções (`IllegalArgumentException`, `IllegalStateException`)
 
----
 
-## ▶️ Como Executar
-1. Compile os arquivos Java:
-   ```bash
-   javac -d out $(find src -name "*.java")
-   ```
-2. Execute o programa:
-   ```bash
+### ▶️ Como Executar o programa
+
+```bash
    java -cp out org.academiadb.prova.Menu
-   ```
+  ```
 
 ---
 
@@ -242,7 +250,7 @@ Produto cadastrado com sucesso. ID: 1
 
 ---
 
-## ✅ Validações Implementadas
+### ✅ Validações Implementadas
 - Nome normalizado (trim, espaços únicos, lowercase para índice)
 - Preço não negativo
 - Quantidade positiva
@@ -251,7 +259,7 @@ Produto cadastrado com sucesso. ID: 1
 
 ---
 
-## 🔄 Fluxo de Finalização do Pedido
+### Fluxo de Finalização do Pedido
 1. Verifica disponibilidade de estoque para cada item
 2. Recebe pagamento e calcula troco
 3. Emite recibo com itens, total, pago e troco
@@ -261,7 +269,7 @@ Produto cadastrado com sucesso. ID: 1
 
 ---
 
-## ✅ Boas Práticas
+### Boas Práticas
 - Uso consistente de prompts para interação
 - Normalização de nomes para evitar duplicidade
 - Validações centralizadas em `ValidadorProduto`
@@ -269,9 +277,6 @@ Produto cadastrado com sucesso. ID: 1
 
 ---
 
-## 📌 Observações
-- Todas as interações são feitas via terminal
-- Mensagens usam `prompt` para orientar o usuário
 
 
 
