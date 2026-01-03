@@ -1,9 +1,13 @@
 package org.academiadb.prova;
 
-
+import org.academiadb.prova.validacaoSuperMercado.ValidadorEstoque;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.academiadb.prova.validacaoSuperMercado.ValidadorEstoque.validarProdutoExiste;
+import static org.academiadb.prova.validacaoSuperMercado.ValidadorEstoque.validarQuantidadePositiva;
+
 
 public class Estoque {
     private final AtomicInteger contador = new AtomicInteger(0);
@@ -25,63 +29,67 @@ public class Estoque {
     }
 
 
-    public boolean cadastrarProduto(Produto p) {
-        if (p == null) return false;
+    public boolean cadastrarProduto(Produto produto) {
+        if (produto == null) return false;
 
-        if (porId.containsKey(p.getId())) {
+        if (porId.containsKey(produto.getId())) {
             return false;
         }
 
-        porId.put(p.getId(), p);
-        idPorNome.put(p.getNome().toLowerCase(Locale.ROOT), p.getId());
+        porId.put(produto.getId(), produto);
+        idPorNome.put(produto.getNome().toLowerCase(Locale.ROOT), produto.getId());
         return true;
     }
 
 
-    public int cadastrarComIdNovo(Produto p) {
-        if (p == null) throw new IllegalArgumentException("Produto não pode ser nulo");
+    public int cadastrarComIdNovo(Produto produto) {
+        if (produto == null) throw new IllegalArgumentException("Produto não pode ser nulo");
         int id;
         do {
             id = gerarId();
         } while (porId.containsKey(id));
-        p.setId(id);
-        porId.put(id, p);
-        idPorNome.put(p.getNome().toLowerCase(Locale.ROOT), id);
+        produto.setId(id);
+        porId.put(id, produto);
+        idPorNome.put(produto.getNome().toLowerCase(Locale.ROOT), id);
         return id;
     }
 
+
     public boolean darBaixaEmEstoque(int produtoId, int quantidadeParaDarBaixa) {
-        Produto p = porId.get(produtoId);
-        if (p == null || quantidadeParaDarBaixa <= 0) return false;
-        int atual = p.getQuantidadeEmEstoque();
-        if (atual < quantidadeParaDarBaixa) return false;
-        p.setQuantidadeEmEstoque(atual - quantidadeParaDarBaixa);
+        validarQuantidadePositiva(quantidadeParaDarBaixa, "quantidade para dar baixa");
+
+        Produto produto = porId.get(produtoId);
+        validarProdutoExiste(produto);
+
+        int atual = produto.getQuantidadeEmEstoque();
+        ValidadorEstoque.validarDisponibilidade(atual, quantidadeParaDarBaixa);
+
+        ValidadorEstoque.validarNaoAbaixoDoMinimo(atual, quantidadeParaDarBaixa, produto.getEstoqueMinimo());
+
+        produto.setQuantidadeEmEstoque(atual - quantidadeParaDarBaixa);
         return true;
     }
+
 
     public boolean darBaixaEmEstoquePorNome(String nome, int quantidadeParaDarBaixa) {
-        Produto p = encontraProdutoPorNome(nome);
-        if (p == null || quantidadeParaDarBaixa <= 0) return false;
-        int atual = p.getQuantidadeEmEstoque();
+        Produto produto = encontraProdutoPorNome(nome);
+        validarQuantidadePositiva (quantidadeParaDarBaixa, "quantidade para dar baixa");
+        validarProdutoExiste (produto);
+        int atual = produto.getQuantidadeEmEstoque();
         if (atual < quantidadeParaDarBaixa) return false;
-        p.setQuantidadeEmEstoque(atual - quantidadeParaDarBaixa);
+        produto.setQuantidadeEmEstoque(atual - quantidadeParaDarBaixa);
         return true;
     }
 
-    public int getQuantidadeAtualEmEstoque(Produto produto) {
-        if (produto == null) return 0;
-        Produto p = porId.get(produto.getId());
-        return (p == null) ? 0 : p.getQuantidadeEmEstoque();
-    }
 
-    public boolean temEstoque(Produto produto, int quantidade) {
-        if (produto == null || quantidade <= 0) return false;
+    public boolean disponivelEmEstoque(Produto produto, int quantidade) {
+        if (produto == null || quantidade <= 0) return true;
         Produto p = porId.get(produto.getId());
-        return p != null && p.getQuantidadeEmEstoque() >= quantidade;
+        return p == null || p.getQuantidadeEmEstoque() < quantidade;
     }
 
     public void imprimeCatalogo() {
-        System.out.println("=== Catálogo de Produtos ===");
+        System.out.println("===## Catálogo de Produtos ##===");
         if (porId.isEmpty()) {
             System.out.println("Nenhum produto cadastrado.");
         } else {

@@ -3,7 +3,6 @@ package org.academiadb.prova.validacaoSuperMercado;
 
 
 import org.academiadb.prova.Item;
-import org.academiadb.prova.Pedido;
 
 import java.util.List;
 

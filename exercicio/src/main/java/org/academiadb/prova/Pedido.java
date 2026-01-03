@@ -50,7 +50,7 @@ public class Pedido {
 
 
     public void imprimirPedido() {
-        System.out.println("=== Itens do Pedido ===");
+        System.out.println("==== #Itens do Pedido# ====");
         if (itens.isEmpty()) {
             System.out.println("Sem itens.");
         } else {
@@ -118,14 +118,14 @@ public class Pedido {
 
         // Notas
         for (int i = 0; i < notas.length; i++) {
-            int qtd = centavos / notas[i];
-            if (qtd > 0) { resultado.put(nomesNotas[i], qtd); centavos -= qtd * notas[i];}}
+            int quantidade = centavos / notas[i];
+            if (quantidade > 0) { resultado.put(nomesNotas[i], quantidade); centavos -= quantidade * notas[i];}}
 
         for (int i = 0; i < moedas.length; i++) {
-            int qtd = centavos / moedas[i];
-            if (qtd > 0) {
-                resultado.put(nomesMoedas[i], qtd);
-                centavos -= qtd * moedas[i];
+            int quantidade = centavos / moedas[i];
+            if (quantidade > 0) {
+                resultado.put(nomesMoedas[i], quantidade);
+                centavos -= quantidade * moedas[i];
             } }return resultado;}
 
     public void imprimirDistribuicaoTroco(Map<String, Integer> distribuicao) {
@@ -143,19 +143,19 @@ public class Pedido {
         itens.remove(indice);calculateValorTotalPedido();}
 
 
-    public void adicionarItem(Produto produto, int novaQtd) {
-        if (produto == null || novaQtd <= 0) return;
+    public void adicionarItem(Produto produto, int novaQuantidade) {
+        if (produto == null || novaQuantidade <= 0) return;
 
         // Procura se já existe um Item para o produto
         for (Item it : itens) {
             if (it.getProduto().getId() == produto.getId()) {
                 // Atualiza a quantidade do item existente
-                it.setQuantidade(novaQtd);
+                it.setQuantidade(novaQuantidade);
                 // Recalcula o preço total do item (assumindo que Item recalcula internamente)
                 calculateValorTotalPedido();return;}}
 
         // Não existia -> adiciona novo
-        itens.add(new Item(produto, novaQtd));calculateValorTotalPedido();}
+        itens.add(new Item(produto, novaQuantidade));calculateValorTotalPedido();}
 
     public void calcularValorTotal() {
         calculateValorTotalPedido();

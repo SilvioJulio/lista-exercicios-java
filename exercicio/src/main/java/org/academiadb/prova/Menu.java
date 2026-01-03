@@ -1,5 +1,6 @@
 package org.academiadb.prova;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,28 +15,28 @@ public class Menu {
     }
 
     public void controlaMenu() {
-        try (Scanner sc = new Scanner(System.in)) {
+        try (Scanner input = new Scanner(System.in)) {
             int opcao;
             do {
                 imprimirCabecalho();
-                opcao = numeroInteirovalido(sc, "Escolha a opção: ");
-                switchCase(opcao, sc);
+                opcao = numeroInteirovalido(input, "Escolha a opção: ");
+                switchCase(opcao, input);
             } while (opcao != 0);
         }
     }
 
-    private void switchCase(int opcao, Scanner tc) {
+    private void switchCase(int opcao, Scanner input) {
         switch (opcao) {
             case 1 -> mostrarEstoque();
-            case 2 -> cadastrarProduto(tc);
-            case 3 -> buscarProduto(tc);
-            case 4 -> reporEstoque(tc);
-            case 5 -> darBaixaEmEstoque(tc);
-            case 6 -> adicionarItemAoPedido(tc);
-            case 7 -> alterarQuantidadeItemPedido(tc);
-            case 8 -> removerItemDoPedido(tc);
+            case 2 -> cadastrarProduto(input);
+            case 3 -> buscarProduto(input);
+            case 4 -> reporEstoque(input);
+            case 5 -> darBaixaEmEstoque(input);
+            case 6 -> adicionarItemAoPedido(input);
+            case 7 -> alterarQuantidadeItemPedido(input);
+            case 8 -> removerItemDoPedido(input);
             case 9 -> verPedido();
-            case 10 -> finalizarPedido(tc); // pagamento + troco + recibo + baixa
+            case 10 -> finalizarPedido(input); // pagamento + troco + recibo + baixa
             case 0 -> System.out.println("Saindo...");
             default -> System.out.println("Opção inválida.");
         }
@@ -45,7 +46,7 @@ public class Menu {
         estoque.imprimeCatalogo();
     }
 
-    private void cadastrarProduto(Scanner sc) {
+    private void cadastrarProduto(Scanner input) {
         estoque.gerarId();
         int id = estoque.getId();
 
@@ -58,106 +59,103 @@ public class Menu {
             } while (estoque.encontraProdutoPorId(id) != null);
         }
 
-        String nome = lerLinha(sc, "Nome do produto: ");
-        double preco = numeroDoubleValido(sc, "Preço (R$): ");
-        int quantidade = numeroInteirovalido(sc, "Quantidade inicial em estoque: ");
+        String nome = lerLinha(input, "Nome do produto: ");
+        double preco = numeroDoubleValido(input, "Preço (R$): ");
+        int quantidade = numeroInteirovalido(input, "Quantidade inicial em estoque: ");
 
-        Produto p = new Produto(id, nome, preco, quantidade);
-        estoque.cadastrarProduto(p);
+        Produto produto = new Produto(id, nome, preco, quantidade);
+        estoque.cadastrarProduto(produto);
 
         System.out.println("Produto cadastrado com sucesso. ID: " + id);
     }
 
-    private void buscarProduto(Scanner sc) {
+    private void buscarProduto(Scanner input) {
         System.out.println("\nBuscar produto por:");
         System.out.println("[1] = ID");
         System.out.println("[2] = Nome");
-        int op = numeroInteirovalido(sc, "Escolha: ");
+        int opcao = numeroInteirovalido(input, "Escolha: ");
 
-        Produto p;
-        if (op == 1) {
-            int id = numeroInteirovalido(sc, "ID: ");
-            p = estoque.encontraProdutoPorId(id);
-        } else if (op == 2) {
-            String nome = lerLinha(sc, "Nome: ");
-            p = estoque.encontraProdutoPorNome(nome);
+        Produto produto;
+        if (opcao == 1) {
+            int id = numeroInteirovalido(input, "ID: ");
+            produto = estoque.encontraProdutoPorId(id);
+        } else if (opcao == 2) {
+            String nome = lerLinha(input, "Nome: ");
+            produto = estoque.encontraProdutoPorNome(nome);
         } else {
             System.out.println("Opção inválida.");
             return;
         }
 
-        System.out.println(p == null ? "Produto não encontrado." : p);
+        System.out.println(produto == null ? "Produto não encontrado." : produto);
     }
 
-    private void reporEstoque(Scanner sc) {
-        int id = numeroInteirovalido(sc, "ID do produto: ");
-        int qtd = numeroInteirovalido(sc, "Quantidade para repor: ");
+    private void reporEstoque(Scanner input) {
+        int id = numeroInteirovalido(input, "ID do produto: ");
+        int quantidade = numeroInteirovalido(input, "Quantidade para repor: ");
 
-        Produto p = estoque.encontraProdutoPorId(id);
-        if (p == null) {
+        Produto produto = estoque.encontraProdutoPorId(id);
+        if (produto == null) {
             System.out.println("Produto não encontrado.");
             return;
         }
-        if (qtd <= 0) {
+        if (quantidade <= 0) {
             System.out.println("Quantidade inválida.");
             return;
         }
         System.out.println("===================================================");
-        p.setQuantidadeEmEstoque(p.getQuantidadeEmEstoque() + qtd);
+        produto.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque() + quantidade);
         System.out.printf("Estoque de %s atualizado para %d.%n",
-                p.getNome(), p.getQuantidadeEmEstoque());
+                produto.getNome(), produto.getQuantidadeEmEstoque());
         System.out.println("===================================================");
     }
 
-    private void darBaixaEmEstoque(Scanner sc) {
+    private void darBaixaEmEstoque(Scanner input) {
         System.out.println("\nDar baixa por:");
-        System.out.println("1) ID");
-        System.out.println("2) Nome");
-        int op = numeroInteirovalido(sc, "Escolha: ");
-        int qtd = numeroInteirovalido(sc, "Quantidade para dar baixa: ");
+        System.out.println("[1] ID");
+        System.out.println("[2] Nome");
+        int opcao = numeroInteirovalido(input, "Escolha: ");
+        int quantidade = numeroInteirovalido(input, "Quantidade para dar baixa: ");
 
-        boolean ok;
-        if (op == 1) {
-            int id = numeroInteirovalido(sc, "ID do produto: ");
-            ok = estoque.darBaixaEmEstoque(id, qtd);
-        } else if (op == 2) {
-            String nome = lerLinha(sc, "Nome do produto: ");
-            ok = estoque.darBaixaEmEstoquePorNome(nome, qtd);
+        boolean verificaIdNome;
+        if (opcao == 1) {
+            int id = numeroInteirovalido(input, "ID do produto: ");
+            verificaIdNome = estoque.darBaixaEmEstoque(id, quantidade);
+        } else if (opcao == 2) {
+            String nome = lerLinha(input, "Nome do produto: ");
+            verificaIdNome = estoque.darBaixaEmEstoquePorNome(nome, quantidade);
         } else {
             System.out.println("Opção inválida.");
             return;
         }
 
-        System.out.println(ok ? "Baixa realizada com sucesso."
+        System.out.println(verificaIdNome ? "Baixa realizada com sucesso."
                 : "Não foi possível realizar a baixa (produto/quantidade inválidos).");
     }
 
-    private void adicionarItemAoPedido(Scanner sc) {
-        int id = numeroInteirovalido(sc, "ID do produto: ");
-        Produto p = estoque.encontraProdutoPorId(id);
-        if (p == null) {
+    private void adicionarItemAoPedido(Scanner input) {
+        int id = numeroInteirovalido(input, "ID do produto: ");
+        Produto produto = estoque.encontraProdutoPorId(id);
+        if (produto == null) {
             System.out.println("Produto não encontrado.");
             return;
         }
 
-        int qtd = numeroInteirovalido(sc, "Quantidade: ");
-        if (qtd <= 0) {
+        int quantidade = numeroInteirovalido(input, "Quantidade: ");
+        if (quantidade <= 0) {
             System.out.println("Quantidade inválida.");
             return;
         }
-        if (!estoque.temEstoque(p, qtd)) {
+        if (estoque.disponivelEmEstoque(produto, quantidade)) {
             System.out.println("Estoque insuficiente.");
             return;
         }
 
-        // Se o método adicionarItem já atualiza quando o produto existe, ótimo.
-        // Caso contrário, ajuste para usar um método de atualização do Pedido.
-        pedido.adicionarItem(p, qtd);
+        pedido.adicionarItem(produto, quantidade);
         System.out.println("Item adicionado/atualizado no pedido.");
     }
 
-
-    private void alterarQuantidadeItemPedido(Scanner sc) {
+    private void alterarQuantidadeItemPedido(Scanner input) {
 
         List<Item> itens = pedido.getItens();
         if (itens == null || itens.isEmpty()) {
@@ -165,7 +163,7 @@ public class Menu {
             return;
         }
 
-        // Exibir itens numerados
+
         System.out.println("=== Itens do Pedido ===");
         for (int i = 0; i < itens.size(); i++) {
             Item it = itens.get(i);
@@ -176,13 +174,13 @@ public class Menu {
                     it.getPrecoTotal());
         }
 
-        // Seleção do item
+
         int indice;
         while (true) {
             String promptSelecao = (itens.size() == 1)
                     ? "Selecione o item (digite 1): "
                     : "Digite o número do item que deseja alterar (1 a " + itens.size() + "): ";
-            int entrada = numeroInteirovalido(sc, promptSelecao);
+            int entrada = numeroInteirovalido(input, promptSelecao);
             indice = entrada - 1;
             if (indice >= 0 && indice < itens.size()) break;
             System.out.println("Número inválido. Digite um valor entre 1 e " + itens.size() + ".");
@@ -192,30 +190,29 @@ public class Menu {
         int quantidadeAtual = item.getQuantidade();
         Produto produto = item.getProduto();
 
-        int novaQtd;
+        int novaQuantidade;
         while (true) {
-            novaQtd = numeroInteirovalido(sc,
+            novaQuantidade = numeroInteirovalido(input,
                     "Quantidade atual: " + quantidadeAtual +
                             ". Digite nova quantidade pode ser maior ou menor que a atual: ");
-            if (novaQtd > 0) break;
+            if (novaQuantidade > 0) break;
             System.out.println("Quantidade inválida. Digite um número quantidade pode ser maior ou menor que a atual.");
         }
 
         // Verificar estoque
-        if (!estoque.temEstoque(produto, novaQtd)) {
+        if (estoque.disponivelEmEstoque(produto, novaQuantidade)) {
             System.out.println("Estoque insuficiente para a quantidade informada.");
             return;
         }
 
-        item.setQuantidade(novaQtd);
+        item.setQuantidade(novaQuantidade);
 
         pedido.calcularValorTotal();
         System.out.printf("Quantidade atualizada: %s agora tem %d unidades.%n",
-                produto.getNome(), novaQtd);
+                produto.getNome(), novaQuantidade);
     }
 
-
-    private void removerItemDoPedido(Scanner sc) {
+    private void removerItemDoPedido(Scanner input) {
         verPedido();
         List<Item> itens = pedido.getItens();
         if (itens == null || itens.isEmpty()) {
@@ -237,7 +234,7 @@ public class Menu {
         // Escolha com validação
         int indice;
         while (true) {
-            int entrada = numeroInteirovalido(sc,
+            int entrada = numeroInteirovalido(input,
                     "Digite o número do item que deseja remover (1 a " + itens.size() + "): ");
             indice = entrada - 1;
             if (indice >= 0 && indice < itens.size()) break;
@@ -255,53 +252,95 @@ public class Menu {
     }
 
 
-    private void finalizarPedido(Scanner sc) {
+
+    private void finalizarPedido(Scanner input) {
         List<Item> itens = pedido.getItens();
         if (itens == null || itens.isEmpty()) {
             System.out.println("Pedido vazio.");
             return;
         }
 
-        // Verifica estoque
-        boolean ok = true;
+        // Verifica estoque (quantidade suficiente para cada item)
+        boolean temEmEstoque = true;
         for (Item i : itens) {
-            if (!estoque.temEstoque(i.getProduto(), i.getQuantidade())) {
-                ok = false;
+            if (estoque.disponivelEmEstoque(i.getProduto(), i.getQuantidade())) {
+                temEmEstoque = false;
                 System.out.printf("Falha: estoque insuficiente para %s%n", i.getProduto().getNome());
             }
         }
-        if (!ok) {
+        if (!temEmEstoque) {
             System.out.println("Não foi possível finalizar. Ajuste as quantidades.");
             return;
         }
 
         // Pagamento + troco
         pedido.calcularValorTotal();
-        double total = pedido.getValorTotalPedido(); // mantenha consistente com sua classe
+        double total = pedido.getValorTotalPedido();
         System.out.println("Total a pagar: R$ " + String.format("%.2f", total));
 
-        double valorPago = numeroDoubleValido(sc, "Valor pago (R$): ");
+        double valorPago = numeroDoubleValido(input, "Valor pago (R$): ");
         double troco = pedido.calcularTroco(valorPago);
         if (troco < 0) {
-            // Valor insuficiente: não finaliza
+            System.out.println("Valor pago insuficiente. Faltam R$ " + String.format("%.2f", -troco));
             return;
         }
 
-        // (Opcional) exibir distribuição do troco em notas/moedas
+        // Exibir distribuição do troco em notas/moedas
         Map<String, Integer> dist = pedido.calcularMenorQuantidadeDeCedulasEMoedas(troco);
         pedido.imprimirDistribuicaoTroco(dist);
 
-        // ===== Emite RECIBO (inline, sem classe externa) =====
+
         String recibo = gerarReciboTexto(itens, total, valorPago, troco);
         imprimirRecibo(recibo);
 
-        // Dá baixa no estoque e conclui
+        // Dar baixa no estoque
+        List<String> avisos = new ArrayList<>();
+        List<String> itensComFalhaNaBaixa = new ArrayList<>();
+        boolean todasBaixasAplicadas = true;
+
         for (Item i : itens) {
-            estoque.darBaixaEmEstoque(i.getProduto().getId(), i.getQuantidade());
+            Produto produto = i.getProduto();
+            int produtoId = produto.getId();
+            int quantidade = i.getQuantidade();
+            try {
+                boolean ok = estoque.darBaixaEmEstoque(produtoId, quantidade);
+                if (!ok) {
+                    todasBaixasAplicadas = false;
+                    itensComFalhaNaBaixa.add(produto.getNome());
+                    avisos.add("Não foi possível dar baixa no produto '" + produto.getNome() + "'.");
+                }
+            } catch (IllegalArgumentException e) {
+                // Ex.: quantidade <= 0, produto não encontrado (regra de entrada)
+                todasBaixasAplicadas = false;
+                itensComFalhaNaBaixa.add(produto.getNome());
+                avisos.add("Erro no item '" + produto.getNome() + "': " + e.getMessage());
+            } catch (IllegalStateException e) {
+                // Ex.: insuficiente ou abaixo do mínimo — usar a mensagem amigável que você formata no validador
+                todasBaixasAplicadas = false;
+                itensComFalhaNaBaixa.add(produto.getNome());
+                avisos.add(e.getMessage());
+            }
         }
-        System.out.println("Pedido finalizado e estoque atualizado.");
-        pedido.limparCarrinho();
+
+        if (!avisos.isEmpty()) {
+            System.out.println();
+            System.out.println("============ Aviso importante ============");
+            for (String msg : avisos) {
+                System.out.println(msg);
+            }
+        }
+
+        if (todasBaixasAplicadas) {
+            System.out.println("Pedido finalizado e estoque atualizado.");
+            pedido.limparCarrinho();
+        } else {
+            System.out.println("Não foi possível realzar operação !!!.");
+            pedido.limparCarrinho();
+        }
     }
+
+
+
 
     private void imprimirCabecalho() {
         System.out.println("\n========= SuperMercado =========");
@@ -318,13 +357,11 @@ public class Menu {
         System.out.println("0) Sair");
     }
 
-    // ========= Entrada robusta (lendo por linha e convertendo) =========
-
     // Inteiro válido (loop até ser válido)
-    private int numeroInteirovalido(Scanner sc, String prompt) {
+    private int numeroInteirovalido(Scanner input, String prompt) {
         while (true) {
             System.out.print(prompt);
-            String linha = sc.nextLine().trim();
+            String linha = input.nextLine().trim();
             try {
                 return Integer.parseInt(linha);
             } catch (NumberFormatException e) {
@@ -333,11 +370,10 @@ public class Menu {
         }
     }
 
-
-    private double numeroDoubleValido(Scanner sc, String prompt) {
+    private double numeroDoubleValido(Scanner input, String prompt) {
         while (true) {
             System.out.print(prompt);
-            String linha = sc.nextLine().trim();
+            String linha = input.nextLine().trim();
 
             if (linha.isEmpty()) {
                 System.out.println("Entrada vazia. Digite um valor (ex.: 12,34).");
@@ -358,7 +394,6 @@ public class Menu {
             }
         }
     }
-
 
     private String lerLinha(Scanner sc, String prompt) {
         System.out.print(prompt);
@@ -403,4 +438,5 @@ public class Menu {
         menu.controlaMenu();
     }
 }
+
 

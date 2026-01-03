@@ -3,7 +3,8 @@ package org.academiadb.prova.validacaoSuperMercado;
 public class ValidadorProduto {
 
     public static String ValidadorNomeProduto(String produto, String campo) {
-        if (produto == null || produto.trim().isEmpty()) {
+
+        if (produto == null || produto.trim().isEmpty() ) {
             throw new IllegalArgumentException("O campo: " + campo + " não pode ser nulo ou vazio.");
         }
 
@@ -34,15 +35,11 @@ public class ValidadorProduto {
     }
 
     public static int estoqueNaoDeveSerNegativa(int quantidade, String campo) {
-        if (quantidade < 0) {
+        if (quantidade <=0) {
             throw new IllegalArgumentException("O campo: " + campo + " não pode ser negativo.");
         }
         return quantidade;
     }
-    public static void  validarNomeProdutoExistente(String nomeProduto, boolean existe) {
-        if (existe) {
-            throw new IllegalArgumentException("O produto com o nome: " + nomeProduto + " já existe no estoque.");
-        }
-    }
+
 
 }
