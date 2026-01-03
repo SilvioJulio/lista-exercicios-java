@@ -1,9 +1,6 @@
 package org.academiadb.prova;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
     private final Estoque estoque;
@@ -46,28 +43,35 @@ public class Menu {
         estoque.imprimeCatalogo();
     }
 
+
     private void cadastrarProduto(Scanner input) {
         estoque.gerarId();
         int id = estoque.getId();
 
-        if (estoque.encontraProdutoPorId(id) != null) {
-            System.out.println("ID do produto já cadastrado. Gerando novo ID...");
-            // tenta até encontrar outro id
-            do {
-                estoque.gerarId();
-                id = estoque.getId();
-            } while (estoque.encontraProdutoPorId(id) != null);
+        String nomeEntrada = lerLinha(input, "Nome do produto: ");
+        String chave = nomeEntrada.trim().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT);
+
+        // Validação simples de duplicidade
+        if (estoque.getIdPorNome().containsKey(chave)) {
+            System.out.println("Já existe no estoque. Escolha outro nome.");
+            return; // interrompe cadastro
         }
 
-        String nome = lerLinha(input, "Nome do produto: ");
         double preco = numeroDoubleValido(input, "Preço (R$): ");
         int quantidade = numeroInteirovalido(input, "Quantidade inicial em estoque: ");
 
-        Produto produto = new Produto(id, nome, preco, quantidade);
+        // Normaliza nome para exibição
+        String nomeNormalizado = nomeEntrada.trim().replaceAll("\\s+", " ");
+
+        Produto produto = new Produto(id, nomeNormalizado, preco, quantidade);
         estoque.cadastrarProduto(produto);
+
+        // Atualiza índice de nomes
+        estoque.getIdPorNome().put(chave, id);
 
         System.out.println("Produto cadastrado com sucesso. ID: " + id);
     }
+
 
     private void buscarProduto(Scanner input) {
         System.out.println("\nBuscar produto por:");
@@ -133,6 +137,7 @@ public class Menu {
                 : "Não foi possível realizar a baixa (produto/quantidade inválidos).");
     }
 
+
     private void adicionarItemAoPedido(Scanner input) {
         int id = numeroInteirovalido(input, "ID do produto: ");
         Produto produto = estoque.encontraProdutoPorId(id);
@@ -146,7 +151,9 @@ public class Menu {
             System.out.println("Quantidade inválida.");
             return;
         }
-        if (estoque.disponivelEmEstoque(produto, quantidade)) {
+
+
+        if (!estoque.temEstoque(produto, quantidade)) {
             System.out.println("Estoque insuficiente.");
             return;
         }
@@ -154,6 +161,7 @@ public class Menu {
         pedido.adicionarItem(produto, quantidade);
         System.out.println("Item adicionado/atualizado no pedido.");
     }
+
 
     private void alterarQuantidadeItemPedido(Scanner input) {
 

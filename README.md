@@ -145,5 +145,136 @@ Projeto em java que gerenciar uma agenda telefônica com funcionalidades de adic
     - **Buscar contato:** retorna o contato correto ou indica se não encontrado.
     - **Listar contatos:** exibe todos os contatos ordenados por nome.
 
+### ✅ Prova 
+
+# SuperMercado
+
+Sistema completo em **Java** para gerenciamento de estoque e pedidos em um supermercado.
+Inclui regras de negócio, validações robustas e interação via terminal com prompts.
+
+---
+
+## 📌 Descrição Geral
+Este projeto permite cadastrar produtos, controlar estoque, gerenciar pedidos, calcular troco e emitir recibos.
+Todas as operações seguem regras de negócio para garantir consistência e evitar erros comuns.
+
+---
+
+## ✅ Funcionalidades
+- Cadastrar produtos (nome, preço, quantidade)
+- Listar estoque
+- Repor estoque
+- Dar baixa em estoque
+- Adicionar itens ao pedido
+- Alterar ou remover itens do pedido
+- Finalizar pedido com cálculo de troco e emissão de recibo
+
+---
+
+## 🔒 Regras de Negócio
+- Nome do produto:
+    - Não pode ser nulo ou vazio
+    - Não pode ser duplicado
+    - Deve conter apenas letras e espaços
+    - Tamanho entre 2 e 100 caracteres
+- Preço:
+    - Deve ser maior ou igual a zero
+- Quantidade:
+    - Deve ser maior que zero
+- Estoque mínimo:
+    - Não permitir baixa que deixe estoque abaixo do mínimo (padrão: 10)
+
+---
+
+## 🛠 Estrutura do Projeto
+```
+src/
+ ├── org/academiadb/prova/
+ │    ├── Menu.java          # Interface principal via terminal
+ │    ├── Estoque.java       # Gerenciamento de produtos e estoque
+ │    ├── Produto.java       # Modelo de produto
+ │    ├── Pedido.java        # Gestão de itens do pedido
+ │    └── validacaoSuperMercado/
+ │         └── ValidadorProduto.java  # Validações de regras de negócio
+```
+
+---
+
+## 💻 Tecnologias Utilizadas
+- **Java 17+**
+- Estruturas de dados: `Map`, `List`
+- Validações com exceções (`IllegalArgumentException`, `IllegalStateException`)
+
+---
+
+## ▶️ Como Executar
+1. Compile os arquivos Java:
+   ```bash
+   javac -d out $(find src -name "*.java")
+   ```
+2. Execute o programa:
+   ```bash
+   java -cp out org.academiadb.prova.Menu
+   ```
+
+---
+
+## 🧾 Exemplo de Execução
+```
+========= SuperMercado =========
+1) Listar estoque
+2) Cadastrar produto
+3) Buscar produto (ID/Nome)
+4) Repor estoque
+5) Dar baixa em estoque (ID/Nome)
+6) Adicionar item ao pedido
+7) Alterar quantidade de item do pedido
+8) Remover item do pedido
+9) Ver pedido
+10) Finalizar pedido (troco, emissão de recibo e baixa)
+0) Sair
+Escolha a opção: 2
+Nome do produto: Arroz
+Preço (R$): 3,89
+Quantidade inicial em estoque: 12
+Produto cadastrado com sucesso. ID: 1
+```
+
+---
+
+## ✅ Validações Implementadas
+- Nome normalizado (trim, espaços únicos, lowercase para índice)
+- Preço não negativo
+- Quantidade positiva
+- Bloqueio de duplicidade antes do cadastro
+- Estoque mínimo respeitado nas baixas
+
+---
+
+## 🔄 Fluxo de Finalização do Pedido
+1. Verifica disponibilidade de estoque para cada item
+2. Recebe pagamento e calcula troco
+3. Emite recibo com itens, total, pago e troco
+4. Aplica baixas no estoque (captura exceções e gera avisos)
+5. Exibe avisos após o recibo
+6. Continua execução sem interromper o programa
+
+---
+
+## ✅ Boas Práticas
+- Uso consistente de prompts para interação
+- Normalização de nomes para evitar duplicidade
+- Validações centralizadas em `ValidadorProduto`
+- Tratamento de exceções sem encerrar o programa
+
+---
+
+## 📌 Observações
+- Todas as interações são feitas via terminal
+- Mensagens usam `prompt` para orientar o usuário
+
+
+
+
 
 
