@@ -33,6 +33,7 @@ public class Estoque {
         return porId.get(id);
     }
 
+
     public Produto encontraProdutoPorNome(String nome) {
         if (nome == null) return null;
         String chave = normalizarNome(nome);

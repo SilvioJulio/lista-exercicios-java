@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ItemTest {
 
     @Test
-    public void testeCriarItem() {
+    public void deveCriarItem() {
         Produto produto = new Produto(1, "Feijão", 8.50, 10);
         Item item = new Item(produto, 4);
 
@@ -20,7 +20,7 @@ public class ItemTest {
 
     }
     @Test
-    public void testeAlterarQuantidadeItemValida() {
+    public void deveAlterarQuantidadeItemValida() {
         Produto produto = new Produto(1, "Feijão", 8.50, 10);
         Item item = new Item(produto, 4);
 
@@ -49,4 +49,5 @@ public class ItemTest {
         assertEquals(esperado, item.toString());
     }
 
+    
 }

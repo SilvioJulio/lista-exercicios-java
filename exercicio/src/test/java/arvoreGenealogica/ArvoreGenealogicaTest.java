@@ -28,7 +28,7 @@ class ArvoreGenealogicaTest {
 
     @Test
     @DisplayName("Ocorrer a falhar, caso a  idade do pai < idade do filho + 12")
-    void idadePaiInsuficiente() {
+    void deveVerificarIdadePaiInsuficiente() {
         assertThrows(IllegalArgumentException.class, () ->
                 new ArvoreGenealogica(
                         "Viviane", 70,
@@ -42,7 +42,7 @@ class ArvoreGenealogicaTest {
 
     @Test
     @DisplayName("Falhar se idade da mãe < idade do filho + 12")
-    void idadeMaeInsuficiente() {
+    void deveVerificarIdadeMaeInsuficiente() {
         assertThrows(IllegalArgumentException.class, () ->
                 new ArvoreGenealogica(
                         "Felipe e Marcos", 70,
@@ -56,7 +56,7 @@ class ArvoreGenealogicaTest {
 
     @Test
     @DisplayName("Deve falhar se avós paternos < pai + 25 (quando idade dos avós é fornecida)")
-    void avosPaternosInsuficientes() {
+    void deveVerificarAvosPaternosInsuficientes() {
         assertThrows(IllegalArgumentException.class, () ->
                 new ArvoreGenealogica(
                         "Marcos", 60,  // avô 60
@@ -70,7 +70,7 @@ class ArvoreGenealogicaTest {
 
     @Test
     @DisplayName("Deve rejeitar campos null nos nomes")
-    void nomeInvalidoComDigitos() {
+    void deveVerificarNomeInvalidoComDigitos() {
         assertThrows(NullPointerException.class, () ->
                 new ArvoreGenealogica(
                         "Gisele", null,
@@ -84,7 +84,7 @@ class ArvoreGenealogicaTest {
 
     @Test
     @DisplayName("Deve normalizar múltiplos espaços nos nomes")
-    void normalizaEspacos() {
+    void deveNormalizaEspacos() {
         ArvoreGenealogica arvore = new ArvoreGenealogica(
                 "Marcos", 74,
                 "Adriana", 70,

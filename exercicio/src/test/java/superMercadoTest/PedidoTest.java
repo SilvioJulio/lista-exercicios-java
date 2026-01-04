@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PedidoTest {
 
     @Test
-    void calcularTrocoInsuficienteDeveRetornarNegativoEMensagem() {
+    void deveCalcularTrocoInsuficienteDeveRetornarNegativoEMensagem() {
         Pedido p = new Pedido();
         Produto prod = new Produto(1, "Produto Teste", 10.00, 5);
         p.adicionarItemNaLista(prod, 2); // total 20.00
@@ -21,7 +21,7 @@ class PedidoTest {
     }
 
     @Test
-    void calcularMenorQuantidadeCedulasEMoedasDeveDistribuirCorretamente() {
+    void deveCalcularMenorQuantidadeCedulasEMoedasDeveDistribuirCorretamente() {
         Pedido p = new Pedido();
         double troco = 186.73;
         Map<String, Integer> dist = p.calcularMenorQuantidadeDeCedulasEMoedas(troco);
@@ -40,14 +40,14 @@ class PedidoTest {
     }
 
     @Test
-    void calcularMenorQuantidadeComTrocoNegativoDeveRetornarMapaVazio() {
+    void deveCalcularMenorQuantidadeComTrocoNegativoDeveRetornarMapaVazio() {
         Pedido p = new Pedido();
         Map<String, Integer> dist = p.calcularMenorQuantidadeDeCedulasEMoedas(-5.0);
         assertTrue(dist.isEmpty());
     }
 
     @Test
-    void calcularTrocoExatoDeveRetornarZero() {
+    void deveCalcularTrocoExatoDeveRetornarZero() {
         Pedido p = new Pedido();
         Produto prod = new Produto(1, "Produto Teste", 10.00, 5);
         p.adicionarItemNaLista(prod, 2); // total 20.00
@@ -57,7 +57,7 @@ class PedidoTest {
     }
 
     @Test
-    void calcularTrocoMaiorDeveRetornarValorCorreto() {
+    void deveCalcularTrocoMaiorDeveRetornarValorCorreto() {
         Pedido p = new Pedido();
         Produto prod = new Produto(1, "Produto Teste", 15.00, 5);
         p.adicionarItemNaLista(prod, 2); // total 30.00

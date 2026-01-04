@@ -12,7 +12,7 @@ public class EstoqueTest {
 
 
     @Test
-    void naoPermiteIdDuplicado() {
+    void deveNaoPermiteIdDuplicado() {
         Estoque e = new Estoque();
         int id1 = e.gerarId();
         Produto p1 = new Produto(id1, "Feijão", 8.5, 10);
@@ -23,7 +23,7 @@ public class EstoqueTest {
     }
 
     @Test
-    void cadastrarComIdNovoGeraIdUnico() {
+    void deveCadastrarComIdNovoGeraIdUnico() {
         Estoque e = new Estoque();
         Produto p1 = new Produto(0, "Feijão", 8.5, 10);
         Produto p2 = new Produto(0, "Arroz", 7.0, 5);
@@ -52,7 +52,7 @@ public class EstoqueTest {
     }
 
     @Test
-    void testarGerarIdUnico() {
+    void deveGerarIdUnico() {
         Estoque estoque = new Estoque();
         int id1 = estoque.gerarId();
         int id2 = estoque.gerarId();
@@ -62,4 +62,7 @@ public class EstoqueTest {
         assertNotEquals(id1, id3);
         assertNotEquals(id2, id3);
     }
+
+
+
 }

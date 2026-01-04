@@ -2,7 +2,6 @@ package agendaTelefonicaTest;
 
 import org.academiadb.agendaTelefonica.AgendaTelefonica;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -21,7 +20,7 @@ public class AgendaTest {
     }
 
     @Test
-    public void devListarContatosTest() {
+    public void deveListarContatosTest() {
         AgendaTelefonica agenda = new AgendaTelefonica();
         agenda.addicionarContato("Ana Maria", "71999990001");
         agenda.addicionarContato("Carlos Silva", "71999990002");

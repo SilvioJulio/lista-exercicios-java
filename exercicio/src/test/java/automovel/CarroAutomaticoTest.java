@@ -31,7 +31,7 @@ public class CarroAutomaticoTest {
     }
 
     @Test
-    public void MotoPartidaPedalTest() {
+    public void deveVerificarMotoPartidaPedal() {
         MotoPartidaPedal motoPedal = new MotoPartidaPedal("CG 160", "Vermelha", 2021, "Honda", TipoTransmissao.MANUAL, "FRT4K17", false);
 
         motoPedal.ligar();

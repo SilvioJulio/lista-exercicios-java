@@ -15,7 +15,7 @@ class EmprestimoTest {
     private static final DateTimeFormatter FORMATTER_BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Test
-    public void criandoEmprestimoTest(){
+    public void deveCriandoEmprestimoTest(){
         Pessoa leitor = new Pessoa("Lucas",28, "M","(71) 988007789", "Rua B Santso Silva, n° 89");
         Livro livro = new Livro("O Poder do Hábito", "Charles Duhigg", "Autoajuda");
         LocalDate hoje = LocalDate.of(2025, 12, 21);
